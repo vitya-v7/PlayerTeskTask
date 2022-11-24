@@ -1,1 +1,2 @@
-# PlayerTeskTask
+# PlayerTestTask
+Тестовый плеер
