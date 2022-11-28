@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		2B90B623C35A920C781C7D17 /* libPods-PlayerTestTask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 619003E7605991A7EE97EE3B /* libPods-PlayerTestTask.a */; };
+		AD6DAB002934E19D0085AB8F /* PlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAAFF2934E19D0085AB8F /* PlayerManager.swift */; };
+		AD6DAB022934E3B80085AB8F /* TrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB012934E3B80085AB8F /* TrackModel.swift */; };
+		AD6DAB042934E68A0085AB8F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB032934E68A0085AB8F /* DataManager.swift */; };
+		AD6DAB072934F5C60085AB8F /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB062934F5C60085AB8F /* ViewController+Extensions.swift */; };
+		AD6DAB092934F5E80085AB8F /* CMTime+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB082934F5E80085AB8F /* CMTime+Extensions.swift */; };
+		AD6DAB0B2934F5FC0085AB8F /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */; };
+		AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */; };
+		AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */; };
 		AD8E7D45292FCD4900B03BEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D44292FCD4900B03BEF /* AppDelegate.swift */; };
 		AD8E7D47292FCD4900B03BEF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D46292FCD4900B03BEF /* SceneDelegate.swift */; };
 		AD8E7D49292FCD4900B03BEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D48292FCD4900B03BEF /* ViewController.swift */; };
@@ -17,6 +25,8 @@
 		AD8E7D5C292FCD4B00B03BEF /* PlayerTestTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D5B292FCD4B00B03BEF /* PlayerTestTaskTests.swift */; };
 		AD8E7D66292FCD4C00B03BEF /* PlayerTestTaskUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D65292FCD4C00B03BEF /* PlayerTestTaskUITests.swift */; };
 		AD8E7D68292FCD4C00B03BEF /* PlayerTestTaskUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D67292FCD4C00B03BEF /* PlayerTestTaskUITestsLaunchTests.swift */; };
+		ADCAD4EA2931F3C600830AF3 /* TracksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAD4E92931F3C600830AF3 /* TracksListViewController.swift */; };
+		ADCAD4EC2931F3D400830AF3 /* TracksListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAD4EB2931F3D400830AF3 /* TracksListPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +49,14 @@
 /* Begin PBXFileReference section */
 		2005124482CE315E2F50690B /* Pods-PlayerTestTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayerTestTask.debug.xcconfig"; path = "Target Support Files/Pods-PlayerTestTask/Pods-PlayerTestTask.debug.xcconfig"; sourceTree = "<group>"; };
 		619003E7605991A7EE97EE3B /* libPods-PlayerTestTask.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlayerTestTask.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD6DAAFF2934E19D0085AB8F /* PlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerManager.swift; sourceTree = "<group>"; };
+		AD6DAB012934E3B80085AB8F /* TrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackModel.swift; sourceTree = "<group>"; };
+		AD6DAB032934E68A0085AB8F /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		AD6DAB062934F5C60085AB8F /* ViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extensions.swift"; sourceTree = "<group>"; };
+		AD6DAB082934F5E80085AB8F /* CMTime+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMTime+Extensions.swift"; sourceTree = "<group>"; };
+		AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesCoordinator.swift; sourceTree = "<group>"; };
+		AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
 		AD8E7D41292FCD4900B03BEF /* PlayerTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8E7D44292FCD4900B03BEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD8E7D46292FCD4900B03BEF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +70,8 @@
 		AD8E7D61292FCD4C00B03BEF /* PlayerTestTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayerTestTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8E7D65292FCD4C00B03BEF /* PlayerTestTaskUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTestTaskUITests.swift; sourceTree = "<group>"; };
 		AD8E7D67292FCD4C00B03BEF /* PlayerTestTaskUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTestTaskUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		ADCAD4E92931F3C600830AF3 /* TracksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksListViewController.swift; sourceTree = "<group>"; };
+		ADCAD4EB2931F3D400830AF3 /* TracksListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksListPresenter.swift; sourceTree = "<group>"; };
 		C490DE5141C7FBA8934C4BA4 /* Pods-PlayerTestTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayerTestTask.release.xcconfig"; path = "Target Support Files/Pods-PlayerTestTask/Pods-PlayerTestTask.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +110,24 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		AD6DAB052934F5B40085AB8F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AD6DAB062934F5C60085AB8F /* ViewController+Extensions.swift */,
+				AD6DAB082934F5E80085AB8F /* CMTime+Extensions.swift */,
+				AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AD6DAB0E2935489D0085AB8F /* TrackTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */,
+			);
+			path = TrackTableViewCell;
+			sourceTree = "<group>";
+		};
 		AD8E7D38292FCD4900B03BEF = {
 			isa = PBXGroup;
 			children = (
@@ -115,13 +153,19 @@
 		AD8E7D43292FCD4900B03BEF /* PlayerTestTask */ = {
 			isa = PBXGroup;
 			children = (
+				AD6DAB052934F5B40085AB8F /* Extensions */,
+				ADCAD4E82931F12B00830AF3 /* TracksListModule */,
 				AD8E7D44292FCD4900B03BEF /* AppDelegate.swift */,
 				AD8E7D46292FCD4900B03BEF /* SceneDelegate.swift */,
 				AD8E7D48292FCD4900B03BEF /* ViewController.swift */,
 				AD8E7D4A292FCD4900B03BEF /* Main.storyboard */,
+				AD6DAB032934E68A0085AB8F /* DataManager.swift */,
 				AD8E7D4D292FCD4B00B03BEF /* Assets.xcassets */,
 				AD8E7D4F292FCD4B00B03BEF /* LaunchScreen.storyboard */,
 				AD8E7D52292FCD4B00B03BEF /* Info.plist */,
+				AD6DAAFF2934E19D0085AB8F /* PlayerManager.swift */,
+				AD6DAB012934E3B80085AB8F /* TrackModel.swift */,
+				AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */,
 			);
 			path = PlayerTestTask;
 			sourceTree = "<group>";
@@ -141,6 +185,16 @@
 				AD8E7D67292FCD4C00B03BEF /* PlayerTestTaskUITestsLaunchTests.swift */,
 			);
 			path = PlayerTestTaskUITests;
+			sourceTree = "<group>";
+		};
+		ADCAD4E82931F12B00830AF3 /* TracksListModule */ = {
+			isa = PBXGroup;
+			children = (
+				AD6DAB0E2935489D0085AB8F /* TrackTableViewCell */,
+				ADCAD4E92931F3C600830AF3 /* TracksListViewController.swift */,
+				ADCAD4EB2931F3D400830AF3 /* TracksListPresenter.swift */,
+			);
+			path = TracksListModule;
 			sourceTree = "<group>";
 		};
 		D3DAB78014E2324C220954EF /* Frameworks */ = {
@@ -326,8 +380,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD6DAB0B2934F5FC0085AB8F /* Double+Extensions.swift in Sources */,
+				ADCAD4EC2931F3D400830AF3 /* TracksListPresenter.swift in Sources */,
+				AD6DAB042934E68A0085AB8F /* DataManager.swift in Sources */,
+				ADCAD4EA2931F3C600830AF3 /* TracksListViewController.swift in Sources */,
+				AD6DAB022934E3B80085AB8F /* TrackModel.swift in Sources */,
+				AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */,
+				AD6DAB072934F5C60085AB8F /* ViewController+Extensions.swift in Sources */,
+				AD6DAB002934E19D0085AB8F /* PlayerManager.swift in Sources */,
 				AD8E7D49292FCD4900B03BEF /* ViewController.swift in Sources */,
+				AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */,
 				AD8E7D45292FCD4900B03BEF /* AppDelegate.swift in Sources */,
+				AD6DAB092934F5E80085AB8F /* CMTime+Extensions.swift in Sources */,
 				AD8E7D47292FCD4900B03BEF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
