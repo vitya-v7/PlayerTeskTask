@@ -1,14 +1,16 @@
 //
 //  AppDelegate.swift
-//  PlayerTestTask
+//  testSort
 //
-//  Created by Admin on 24.11.2022.
+//  Created by Admin on 28.11.2022.
 //
 
 import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

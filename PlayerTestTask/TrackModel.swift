@@ -10,5 +10,5 @@ import Foundation
 struct TrackModel {
     let title: String
     let duration: String
-    
+    let trackURL: URL?
 }

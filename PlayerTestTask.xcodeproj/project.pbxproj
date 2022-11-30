@@ -16,6 +16,8 @@
 		AD6DAB0B2934F5FC0085AB8F /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */; };
 		AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */; };
 		AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */; };
+		AD8E79792937206B0090B424 /* TrackPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E79782937206B0090B424 /* TrackPlayerViewController.swift */; };
+		AD8E797B293720740090B424 /* TrackPlayerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E797A293720740090B424 /* TrackPlayerPresenter.swift */; };
 		AD8E7D45292FCD4900B03BEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D44292FCD4900B03BEF /* AppDelegate.swift */; };
 		AD8E7D47292FCD4900B03BEF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D46292FCD4900B03BEF /* SceneDelegate.swift */; };
 		AD8E7D49292FCD4900B03BEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D48292FCD4900B03BEF /* ViewController.swift */; };
@@ -57,6 +59,8 @@
 		AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesCoordinator.swift; sourceTree = "<group>"; };
 		AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
+		AD8E79782937206B0090B424 /* TrackPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPlayerViewController.swift; sourceTree = "<group>"; };
+		AD8E797A293720740090B424 /* TrackPlayerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPlayerPresenter.swift; sourceTree = "<group>"; };
 		AD8E7D41292FCD4900B03BEF /* PlayerTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8E7D44292FCD4900B03BEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD8E7D46292FCD4900B03BEF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +132,15 @@
 			path = TrackTableViewCell;
 			sourceTree = "<group>";
 		};
+		AD8E7977293720520090B424 /* TrackDetailModule */ = {
+			isa = PBXGroup;
+			children = (
+				AD8E79782937206B0090B424 /* TrackPlayerViewController.swift */,
+				AD8E797A293720740090B424 /* TrackPlayerPresenter.swift */,
+			);
+			path = TrackDetailModule;
+			sourceTree = "<group>";
+		};
 		AD8E7D38292FCD4900B03BEF = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +166,7 @@
 		AD8E7D43292FCD4900B03BEF /* PlayerTestTask */ = {
 			isa = PBXGroup;
 			children = (
+				AD8E7977293720520090B424 /* TrackDetailModule */,
 				AD6DAB052934F5B40085AB8F /* Extensions */,
 				ADCAD4E82931F12B00830AF3 /* TracksListModule */,
 				AD8E7D44292FCD4900B03BEF /* AppDelegate.swift */,
@@ -388,11 +402,13 @@
 				AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */,
 				AD6DAB072934F5C60085AB8F /* ViewController+Extensions.swift in Sources */,
 				AD6DAB002934E19D0085AB8F /* PlayerManager.swift in Sources */,
+				AD8E797B293720740090B424 /* TrackPlayerPresenter.swift in Sources */,
 				AD8E7D49292FCD4900B03BEF /* ViewController.swift in Sources */,
 				AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */,
 				AD8E7D45292FCD4900B03BEF /* AppDelegate.swift in Sources */,
 				AD6DAB092934F5E80085AB8F /* CMTime+Extensions.swift in Sources */,
 				AD8E7D47292FCD4900B03BEF /* SceneDelegate.swift in Sources */,
+				AD8E79792937206B0090B424 /* TrackPlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

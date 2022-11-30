@@ -7,7 +7,15 @@
 
 import AVFoundation
 
-class PlayerManager {
+protocol PlayerManagerDelegate {
+    func getTrack(withIndex index: Int) -> TrackModel?
+    
+}
+
+class PlayerManager: PlayerManagerDelegate {
+    
+    static let shared = PlayerManager()
+    private init() {}
     
     let player: AVPlayer = {
         let player = AVPlayer()
@@ -17,15 +25,49 @@ class PlayerManager {
     
     private var trackCurrentIndex = -1
     
-    static let shared = PlayerManager()
-    private init() {}
-    
-    func play(currentTrack: TrackModel?) {
-        guard let songURl = Bundle.main.url(forResource: currentTrack?.title, withExtension: nil) else { return }
+    lazy var defaultTracks: [TrackModel] = {
+        var tracks = [TrackModel]()
         
-        let playerItem = AVPlayerItem(url: songURl)
+        let urls = DataManager.shared.getUrls()
+        let fileNames = DataManager.shared.getFileNames()
+        let durations = DataManager.shared.getSongDurations()
+        
+        for index in 0...(fileNames.count - 1) {
+            let fileName = fileNames.indices.contains(index) ? fileNames[index] : ""
+            let duration = durations.indices.contains(index) ? durations[index] : "00:00"
+            var trackURL: URL? = urls.indices.contains(index) ? urls[index] : nil
+            if urls.indices.contains(index) {
+                trackURL = urls[index]
+            }
+            tracks.append(TrackModel(title: fileNames[index],
+                                     duration: durations[index],
+                                     trackURL: urls[index]))
+            
+        }
+        return tracks
+    }()
+    
+    func play(trackWithIndex trackIndex: Int) {
+        guard self.defaultTracks.indices.contains(trackIndex),
+              let trackURl = self.defaultTracks[trackIndex].trackURL else { return }
+        self.trackCurrentIndex = trackIndex
+        let playerItem = AVPlayerItem(url: trackURl)
         player.replaceCurrentItem(with: playerItem)
         player.play()
+    }
+    
+    func playNextTrack() {
+        self.trackCurrentIndex = (self.trackCurrentIndex + 1) % self.defaultTracks.count
+        self.play(trackWithIndex: self.trackCurrentIndex)
+    }
+    
+    func playPreviousTrack() {
+        if self.trackCurrentIndex - 1 < 0 {
+            self.trackCurrentIndex = self.defaultTracks.count - 1
+        } else {
+            self.trackCurrentIndex = (self.trackCurrentIndex - 1) % self.defaultTracks.count
+        }
+        self.play(trackWithIndex: self.trackCurrentIndex)
     }
     
     func getDurationValue() -> Float {
@@ -37,19 +79,21 @@ class PlayerManager {
         return Float(percentage)
     }
     
-    func rewindTrack(with percantage: Float) {
-        if let durationTime = player.currentItem?.duration {
-            let durationInSeconds = CMTimeGetSeconds(durationTime)
-            let seekTimeInSeconds = Float64(percantage) * durationInSeconds
-            let seekTime = CMTimeMakeWithSeconds(seekTimeInSeconds, preferredTimescale: 1000)
-            player.seek(to: seekTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+    func rewindTrack(with percentage: Float) {
+        guard let durationTime = player.currentItem?.duration else {
+            return
         }
+        let durationInSeconds = CMTimeGetSeconds(durationTime)
+        let seekTimeInSeconds = Float64(percentage) * durationInSeconds
+        let seekTime = CMTimeMakeWithSeconds(seekTimeInSeconds, preferredTimescale: 1000)
+        player.seek(to: seekTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
     }
     
-    func compareCurrentIndex(with index: Int, track: TrackModel?) {
-        if trackCurrentIndex != index {
-            play(currentTrack: track)
+    
+    func getTrack(withIndex index: Int) -> TrackModel? {
+        guard self.defaultTracks.indices.contains(index) else {
+            return nil
         }
-        trackCurrentIndex = index
+        return self.defaultTracks[index]
     }
 }

@@ -30,8 +30,8 @@ final class ModulesCoordinator {
         
         let presenter = TracksListPresenter()
         presenter.view = tracksListViewController
-        presenter.goToDetailInfoScreen = { trackInfoModel in
-            self.goToDetailTrackInfoScreen(withTrackModel: trackInfoModel)
+        presenter.goToTrackPlayerScreen = { trackInfoModel in
+            self.showTrackPlayerScreen(withTrackModel: trackInfoModel)
         }
         tracksListViewController.output = presenter
         self.navigationController?.pushViewController(tracksListViewController,
@@ -39,7 +39,20 @@ final class ModulesCoordinator {
     }
     
     
-    private func goToDetailTrackInfoScreen(withTrackModel trackModel: TrackModel) {
+    private func showTrackPlayerScreen(withTrackModel trackModel: TrackModel) {
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let tracksListViewController = mainStoryboard.instantiateViewController(
+            withIdentifier: TracksListViewController.storyboardIdentifier) as? TracksListViewController else {
+                  return
+              }
         
+        let presenter = TracksListPresenter()
+        presenter.view = tracksListViewController
+        presenter.goToTrackPlayerScreen = { trackInfoModel in
+            self.showTrackPlayerScreen(withTrackModel: trackInfoModel)
+        }
+        tracksListViewController.output = presenter
+        self.navigationController?.pushViewController(tracksListViewController,
+                                                     animated: false)
     }
 }
