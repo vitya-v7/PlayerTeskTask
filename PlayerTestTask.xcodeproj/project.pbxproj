@@ -16,6 +16,10 @@
 		AD6DAB0B2934F5FC0085AB8F /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */; };
 		AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */; };
 		AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */; };
+		AD810F9729391045007EFE66 /* PlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD810F9629391045007EFE66 /* PlayerState.swift */; };
+		AD8E6BDB2938914D00AB3514 /* PlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E6BDA2938914D00AB3514 /* PlayState.swift */; };
+		AD8E6BDD2938915900AB3514 /* PauseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E6BDC2938915900AB3514 /* PauseState.swift */; };
+		AD8E6BDF2938916600AB3514 /* StopState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E6BDE2938916600AB3514 /* StopState.swift */; };
 		AD8E79792937206B0090B424 /* TrackPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E79782937206B0090B424 /* TrackPlayerViewController.swift */; };
 		AD8E797B293720740090B424 /* TrackPlayerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E797A293720740090B424 /* TrackPlayerPresenter.swift */; };
 		AD8E7D45292FCD4900B03BEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E7D44292FCD4900B03BEF /* AppDelegate.swift */; };
@@ -59,6 +63,10 @@
 		AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesCoordinator.swift; sourceTree = "<group>"; };
 		AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
+		AD810F9629391045007EFE66 /* PlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerState.swift; sourceTree = "<group>"; };
+		AD8E6BDA2938914D00AB3514 /* PlayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayState.swift; sourceTree = "<group>"; };
+		AD8E6BDC2938915900AB3514 /* PauseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseState.swift; sourceTree = "<group>"; };
+		AD8E6BDE2938916600AB3514 /* StopState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopState.swift; sourceTree = "<group>"; };
 		AD8E79782937206B0090B424 /* TrackPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPlayerViewController.swift; sourceTree = "<group>"; };
 		AD8E797A293720740090B424 /* TrackPlayerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPlayerPresenter.swift; sourceTree = "<group>"; };
 		AD8E7D41292FCD4900B03BEF /* PlayerTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +140,18 @@
 			path = TrackTableViewCell;
 			sourceTree = "<group>";
 		};
+		AD8E6BD92938913200AB3514 /* PlayerManager */ = {
+			isa = PBXGroup;
+			children = (
+				AD6DAAFF2934E19D0085AB8F /* PlayerManager.swift */,
+				AD810F9629391045007EFE66 /* PlayerState.swift */,
+				AD8E6BDA2938914D00AB3514 /* PlayState.swift */,
+				AD8E6BDC2938915900AB3514 /* PauseState.swift */,
+				AD8E6BDE2938916600AB3514 /* StopState.swift */,
+			);
+			path = PlayerManager;
+			sourceTree = "<group>";
+		};
 		AD8E7977293720520090B424 /* TrackDetailModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +186,7 @@
 		AD8E7D43292FCD4900B03BEF /* PlayerTestTask */ = {
 			isa = PBXGroup;
 			children = (
+				AD8E6BD92938913200AB3514 /* PlayerManager */,
 				AD8E7977293720520090B424 /* TrackDetailModule */,
 				AD6DAB052934F5B40085AB8F /* Extensions */,
 				ADCAD4E82931F12B00830AF3 /* TracksListModule */,
@@ -177,7 +198,6 @@
 				AD8E7D4D292FCD4B00B03BEF /* Assets.xcassets */,
 				AD8E7D4F292FCD4B00B03BEF /* LaunchScreen.storyboard */,
 				AD8E7D52292FCD4B00B03BEF /* Info.plist */,
-				AD6DAAFF2934E19D0085AB8F /* PlayerManager.swift */,
 				AD6DAB012934E3B80085AB8F /* TrackModel.swift */,
 				AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */,
 			);
@@ -395,11 +415,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD6DAB0B2934F5FC0085AB8F /* Double+Extensions.swift in Sources */,
+				AD8E6BDB2938914D00AB3514 /* PlayState.swift in Sources */,
 				ADCAD4EC2931F3D400830AF3 /* TracksListPresenter.swift in Sources */,
+				AD8E6BDF2938916600AB3514 /* StopState.swift in Sources */,
 				AD6DAB042934E68A0085AB8F /* DataManager.swift in Sources */,
 				ADCAD4EA2931F3C600830AF3 /* TracksListViewController.swift in Sources */,
 				AD6DAB022934E3B80085AB8F /* TrackModel.swift in Sources */,
 				AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */,
+				AD810F9729391045007EFE66 /* PlayerState.swift in Sources */,
 				AD6DAB072934F5C60085AB8F /* ViewController+Extensions.swift in Sources */,
 				AD6DAB002934E19D0085AB8F /* PlayerManager.swift in Sources */,
 				AD8E797B293720740090B424 /* TrackPlayerPresenter.swift in Sources */,
@@ -409,6 +432,7 @@
 				AD6DAB092934F5E80085AB8F /* CMTime+Extensions.swift in Sources */,
 				AD8E7D47292FCD4900B03BEF /* SceneDelegate.swift in Sources */,
 				AD8E79792937206B0090B424 /* TrackPlayerViewController.swift in Sources */,
+				AD8E6BDD2938915900AB3514 /* PauseState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

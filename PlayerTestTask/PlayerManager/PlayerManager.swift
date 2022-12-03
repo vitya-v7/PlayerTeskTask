@@ -15,7 +15,38 @@ protocol PlayerManagerDelegate {
 class PlayerManager: PlayerManagerDelegate {
     
     static let shared = PlayerManager()
-    private init() {}
+    private var currentState: PlayerStateProtocol
+    var trackCurrentIndex = -1
+    
+    private init() {
+        self.currentState = StopState.shared
+        
+    }
+    
+    func playClicked() {
+        self.currentState.managerPlay(self)
+    }
+    
+    func pauseClicked() {
+        self.currentState.managerPause(self)
+    }
+    
+    func stopClicked() {
+        self.currentState.managerStop(self)
+    }
+    
+    func rewind(withPercentageClicked percentage: Float) {
+        self.currentState.manager(self,
+                                  rewindTrackWithPercentage: percentage)
+    }
+    
+    func nextTrackClicked() {
+        self.currentState.managerNextTrackSelected(self)
+    }
+    
+    func previousTrackClicked() {
+        self.currentState.managerPreviousTrackSelected(self)
+    }
     
     let player: AVPlayer = {
         let player = AVPlayer()
@@ -23,7 +54,6 @@ class PlayerManager: PlayerManagerDelegate {
         return player
     }()
     
-    private var trackCurrentIndex = -1
     
     lazy var defaultTracks: [TrackModel] = {
         var tracks = [TrackModel]()
@@ -46,6 +76,7 @@ class PlayerManager: PlayerManagerDelegate {
         }
         return tracks
     }()
+     
     
     func play(trackWithIndex trackIndex: Int) {
         guard self.defaultTracks.indices.contains(trackIndex),
@@ -56,18 +87,30 @@ class PlayerManager: PlayerManagerDelegate {
         player.play()
     }
     
-    func playNextTrack() {
+    func changeOnNextTrack() {
         self.trackCurrentIndex = (self.trackCurrentIndex + 1) % self.defaultTracks.count
-        self.play(trackWithIndex: self.trackCurrentIndex)
     }
     
-    func playPreviousTrack() {
+    func changeOnPreviousTrack() {
         if self.trackCurrentIndex - 1 < 0 {
             self.trackCurrentIndex = self.defaultTracks.count - 1
         } else {
             self.trackCurrentIndex = (self.trackCurrentIndex - 1) % self.defaultTracks.count
         }
-        self.play(trackWithIndex: self.trackCurrentIndex)
+    }
+    
+   func play() {
+       self.play(trackWithIndex: self.trackCurrentIndex)
+   }
+    
+    func pause() {
+        self.player.pause()
+    }
+    
+    func stop() {
+        self.player.pause()
+        self.rewindTrack(with: 0)
+        self.player.pause()
     }
     
     func getDurationValue() -> Float {
@@ -96,4 +139,11 @@ class PlayerManager: PlayerManagerDelegate {
         }
         return self.defaultTracks[index]
     }
+}
+
+extension PlayerManager: PlayerManagerContext {
+    func setState(_ playerState: PlayerStateProtocol) {
+        self.currentState = playerState
+    }
+    
 }

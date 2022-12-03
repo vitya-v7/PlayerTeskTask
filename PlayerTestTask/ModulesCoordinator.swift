@@ -42,7 +42,7 @@ final class ModulesCoordinator {
     private func showTrackPlayerScreen(withTrackModel trackModel: TrackModel) {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         guard let tracksListViewController = mainStoryboard.instantiateViewController(
-            withIdentifier: TracksListViewController.storyboardIdentifier) as? TracksListViewController else {
+            withIdentifier: TrackPlayerViewController.storyboardIdentifier) as? TracksListViewController else {
                   return
               }
         
