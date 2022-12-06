@@ -18,7 +18,14 @@
 		AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */; };
 		AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */; };
 		AD810F9729391045007EFE66 /* PlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD810F9629391045007EFE66 /* PlayerState.swift */; };
-		AD88847F293F1E6E00FF3C7A /* Helpers in Resources */ = {isa = PBXBuildFile; fileRef = AD88847E293F1E6E00FF3C7A /* Helpers */; };
+		AD84DC2D293FD65300759F05 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC2C293FD65300759F05 /* AlertHelper.swift */; };
+		AD84DC2F293FD65800759F05 /* ExportSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC2E293FD65800759F05 /* ExportSessionHelper.swift */; };
+		AD84DC31293FD65B00759F05 /* FilesAppHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC30293FD65A00759F05 /* FilesAppHelper.swift */; };
+		AD84DC33293FD65C00759F05 /* GalleryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC32293FD65C00759F05 /* GalleryHelper.swift */; };
+		AD84DC35293FD65E00759F05 /* MusicFilesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC34293FD65E00759F05 /* MusicFilesHelper.swift */; };
+		AD84DC37293FD66000759F05 /* RootPickerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC36293FD66000759F05 /* RootPickerHelper.swift */; };
+		AD84DC3A293FD7B700759F05 /* FileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC39293FD7B700759F05 /* FileManager+Extensions.swift */; };
+		AD84DC3C293FD83F00759F05 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC3B293FD83F00759F05 /* URL+Extensions.swift */; };
 		AD8E6BDB2938914D00AB3514 /* PlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E6BDA2938914D00AB3514 /* PlayState.swift */; };
 		AD8E6BDD2938915900AB3514 /* PauseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E6BDC2938915900AB3514 /* PauseState.swift */; };
 		AD8E6BDF2938916600AB3514 /* StopState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E6BDE2938916600AB3514 /* StopState.swift */; };
@@ -67,7 +74,14 @@
 		AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesCoordinator.swift; sourceTree = "<group>"; };
 		AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
 		AD810F9629391045007EFE66 /* PlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerState.swift; sourceTree = "<group>"; };
-		AD88847E293F1E6E00FF3C7A /* Helpers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Helpers; sourceTree = "<group>"; };
+		AD84DC2C293FD65300759F05 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
+		AD84DC2E293FD65800759F05 /* ExportSessionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSessionHelper.swift; sourceTree = "<group>"; };
+		AD84DC30293FD65A00759F05 /* FilesAppHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesAppHelper.swift; sourceTree = "<group>"; };
+		AD84DC32293FD65C00759F05 /* GalleryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryHelper.swift; sourceTree = "<group>"; };
+		AD84DC34293FD65E00759F05 /* MusicFilesHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicFilesHelper.swift; sourceTree = "<group>"; };
+		AD84DC36293FD66000759F05 /* RootPickerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPickerHelper.swift; sourceTree = "<group>"; };
+		AD84DC39293FD7B700759F05 /* FileManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extensions.swift"; sourceTree = "<group>"; };
+		AD84DC3B293FD83F00759F05 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		AD8E6BDA2938914D00AB3514 /* PlayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayState.swift; sourceTree = "<group>"; };
 		AD8E6BDC2938915900AB3514 /* PauseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseState.swift; sourceTree = "<group>"; };
 		AD8E6BDE2938916600AB3514 /* StopState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopState.swift; sourceTree = "<group>"; };
@@ -132,6 +146,8 @@
 				AD6DAB062934F5C60085AB8F /* ViewController+Extensions.swift */,
 				AD6DAB082934F5E80085AB8F /* CMTime+Extensions.swift */,
 				AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */,
+				AD84DC39293FD7B700759F05 /* FileManager+Extensions.swift */,
+				AD84DC3B293FD83F00759F05 /* URL+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -142,6 +158,19 @@
 				AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */,
 			);
 			path = TrackTableViewCell;
+			sourceTree = "<group>";
+		};
+		AD84DC38293FD67100759F05 /* Hepers */ = {
+			isa = PBXGroup;
+			children = (
+				AD84DC2C293FD65300759F05 /* AlertHelper.swift */,
+				AD84DC2E293FD65800759F05 /* ExportSessionHelper.swift */,
+				AD84DC30293FD65A00759F05 /* FilesAppHelper.swift */,
+				AD84DC32293FD65C00759F05 /* GalleryHelper.swift */,
+				AD84DC34293FD65E00759F05 /* MusicFilesHelper.swift */,
+				AD84DC36293FD66000759F05 /* RootPickerHelper.swift */,
+			);
+			path = Hepers;
 			sourceTree = "<group>";
 		};
 		AD8E6BD92938913200AB3514 /* PlayerManager */ = {
@@ -190,7 +219,7 @@
 		AD8E7D43292FCD4900B03BEF /* PlayerTestTask */ = {
 			isa = PBXGroup;
 			children = (
-				AD88847E293F1E6E00FF3C7A /* Helpers */,
+				AD84DC38293FD67100759F05 /* Hepers */,
 				AD8E6BD92938913200AB3514 /* PlayerManager */,
 				AD8E7977293720520090B424 /* TrackDetailModule */,
 				ADCAD4E82931F12B00830AF3 /* TracksListModule */,
@@ -355,7 +384,6 @@
 				AD8E7D4E292FCD4B00B03BEF /* Assets.xcassets in Resources */,
 				AD6DA8E9293E2A80007653B9 /* Mp3 tracks in Resources */,
 				AD8E7D4C292FCD4900B03BEF /* Main.storyboard in Resources */,
-				AD88847F293F1E6E00FF3C7A /* Helpers in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,13 +451,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD6DAB0B2934F5FC0085AB8F /* Double+Extensions.swift in Sources */,
+				AD84DC33293FD65C00759F05 /* GalleryHelper.swift in Sources */,
+				AD84DC31293FD65B00759F05 /* FilesAppHelper.swift in Sources */,
+				AD84DC3A293FD7B700759F05 /* FileManager+Extensions.swift in Sources */,
 				AD8E6BDB2938914D00AB3514 /* PlayState.swift in Sources */,
 				ADCAD4EC2931F3D400830AF3 /* TracksListPresenter.swift in Sources */,
 				AD8E6BDF2938916600AB3514 /* StopState.swift in Sources */,
 				AD6DAB042934E68A0085AB8F /* DataManager.swift in Sources */,
 				ADCAD4EA2931F3C600830AF3 /* TracksListViewController.swift in Sources */,
+				AD84DC2F293FD65800759F05 /* ExportSessionHelper.swift in Sources */,
 				AD6DAB022934E3B80085AB8F /* TrackModel.swift in Sources */,
 				AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */,
+				AD84DC2D293FD65300759F05 /* AlertHelper.swift in Sources */,
+				AD84DC37293FD66000759F05 /* RootPickerHelper.swift in Sources */,
 				AD810F9729391045007EFE66 /* PlayerState.swift in Sources */,
 				AD6DAB072934F5C60085AB8F /* ViewController+Extensions.swift in Sources */,
 				AD6DAB002934E19D0085AB8F /* PlayerManager.swift in Sources */,
@@ -438,7 +472,9 @@
 				AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */,
 				AD8E7D45292FCD4900B03BEF /* AppDelegate.swift in Sources */,
 				AD6DAB092934F5E80085AB8F /* CMTime+Extensions.swift in Sources */,
+				AD84DC3C293FD83F00759F05 /* URL+Extensions.swift in Sources */,
 				AD8E7D47292FCD4900B03BEF /* SceneDelegate.swift in Sources */,
+				AD84DC35293FD65E00759F05 /* MusicFilesHelper.swift in Sources */,
 				AD8E79792937206B0090B424 /* TrackPlayerViewController.swift in Sources */,
 				AD8E6BDD2938915900AB3514 /* PauseState.swift in Sources */,
 			);

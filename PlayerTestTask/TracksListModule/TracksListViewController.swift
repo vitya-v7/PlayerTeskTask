@@ -19,6 +19,9 @@ protocol TracksListViewOutput {
     func tracksCount() -> Int
     func getTrack(withIndex: Int) -> TrackModel?
     func rowDidSelected(atIndexPath indexPath: IndexPath)
+    func openItunesClicked()
+    func openGalleryClicked()
+    func openFilesClicked()
 }
 
 class TracksListViewController: UIViewController, TracksListViewInput {
@@ -26,6 +29,18 @@ class TracksListViewController: UIViewController, TracksListViewInput {
     var output: TracksListViewOutput?
     static let storyboardIdentifier = "TrackListControllerID"
      
+    @IBAction func openItunes(_ sender: Any) {
+        self.output?.openItunesClicked()
+    }
+    
+    @IBAction func openGallery(_ sender: Any) {
+        self.output?.openGalleryClicked()
+    }
+    
+    @IBAction func openFiles(_ sender: Any) {
+        self.output?.openFilesClicked()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.output?.viewDidLoadDone()

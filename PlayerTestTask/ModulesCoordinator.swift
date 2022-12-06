@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MediaPlayer
 import UIKit
 
 final class ModulesCoordinator {
@@ -62,6 +63,26 @@ final class ModulesCoordinator {
             documentPicker.allowsMultipleSelection = false
             self.navigationController?.present(documentPicker,
                                                animated: true)
+        }
+    }
+    
+    func showMediaPickerScreen(withMediaDelegate mediaDelegate: MPMediaPickerControllerDelegate) {
+        DispatchQueue.main.async {
+            let mediaPicker = MPMediaPickerController()
+            mediaPicker.delegate = mediaDelegate
+            mediaPicker.allowsPickingMultipleItems = false
+            self.navigationController?.present(mediaPicker,
+                                              animated: false)
+        }
+    }
+    
+    func showGalleryPickerScreen(withGalleryDelegate galleryDelegate: UIImagePickerControllerDelegate & UINavigationControllerDelegate) {
+        DispatchQueue.main.async {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.sourceType = .savedPhotosAlbum
+            imagePickerController.delegate = galleryDelegate
+            imagePickerController.mediaTypes = ["public.movie"]
+            self.navigationController?.present(imagePickerController, animated: true, completion: nil)
         }
     }
 }

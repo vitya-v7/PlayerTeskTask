@@ -12,23 +12,30 @@ import UIKit
 class DataManager {
         
     static let shared = DataManager()
-    private var trackAssets: [AVURLAsset]
+    private var libraryTrackAssets: [AVURLAsset]
     private init() {
         
         guard
             let bundleURLs = Bundle.main.urls(forResourcesWithExtension: "mp3", subdirectory: "Mp3 tracks")
         else { fatalError("Failed to get urls") }
-        self.trackAssets = []
+        self.libraryTrackAssets = []
         for url in bundleURLs {
             let asset = AVURLAsset(url: url)
-            self.trackAssets.append(asset)
+            self.libraryTrackAssets.append(asset)
         }
     }
     
-    func getTracks() -> [TrackModel] {
+    func getTracks(byUrl urls: [URL]? = nil) -> [TrackModel] {
+        var assets = self.libraryTrackAssets
+        if let urls = urls, urls.count > 0 {
+            assets = []
+            for url in urls {
+                assets.append(AVURLAsset(url: url))
+            }
+        }
         var trackModels = [TrackModel]()
         
-        for asset in self.trackAssets {
+        for asset in assets {
             let items = AVMetadataItem.metadataItems(from: asset.metadata, with: .current)
             var title = asset.url.deletingPathExtension().lastPathComponent
             let audioDuration = asset.duration.displayStringValue()
@@ -62,5 +69,18 @@ class DataManager {
                                           trackURL: asset.url))
         }
         return trackModels
+    }
+    
+    func getTempURLToItem(_ item: TrackModel,
+                          withExtension fileExtension: String) -> URL? {
+        
+        guard let baseTempUrl = FileManager.default.getDocumentDirectoryURL() else {
+            return nil
+        }
+        
+        let tempFileUrl = baseTempUrl.appendingPathComponent(item.trackURL.getFileName())
+            .appendingPathExtension(fileExtension)
+        
+        return tempFileUrl
     }
 }

@@ -74,10 +74,59 @@
                                     <outlet property="delegate" destination="GcV-gq-dpc" id="q3X-WI-n5q"/>
                                 </connections>
                             </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="4ov-LR-b17">
+                                <rect key="frame" x="103" y="821" width="208.5" height="31"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pMW-TL-t1T">
+                                        <rect key="frame" x="0.0" y="0.0" width="69.5" height="31"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Itunes">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <buttonConfiguration key="configuration" style="plain" title="Itunes">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="openItunes:" destination="GcV-gq-dpc" eventType="touchUpInside" id="B3W-KI-cap"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IIb-x5-pW0">
+                                        <rect key="frame" x="69.5" y="0.0" width="69.5" height="31"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Gallery">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="openGallery:" destination="GcV-gq-dpc" eventType="touchUpInside" id="bsL-9c-3ZS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8uK-YG-T9c">
+                                        <rect key="frame" x="139" y="0.0" width="69.5" height="31"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Files">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="openFiles:" destination="GcV-gq-dpc" eventType="touchUpInside" id="7qF-gx-rja"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="m8f-c3-6vL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="m8f-c3-6vL" firstAttribute="bottom" secondItem="4ov-LR-b17" secondAttribute="bottom" constant="10" id="OOF-RH-XIF"/>
+                            <constraint firstItem="4ov-LR-b17" firstAttribute="centerX" secondItem="m8f-c3-6vL" secondAttribute="centerX" id="YHL-zh-UUm"/>
                             <constraint firstItem="NB4-xi-KiR" firstAttribute="leading" secondItem="m8f-c3-6vL" secondAttribute="leading" id="YKs-te-Rez"/>
                             <constraint firstItem="NB4-xi-KiR" firstAttribute="trailing" secondItem="m8f-c3-6vL" secondAttribute="trailing" id="k5i-pO-dwt"/>
                             <constraint firstAttribute="bottom" secondItem="NB4-xi-KiR" secondAttribute="bottom" id="tim-hQ-l9E"/>

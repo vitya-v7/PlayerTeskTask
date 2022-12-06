@@ -12,5 +12,5 @@ struct TrackModel {
     let title: String
     let duration: String
     let artworkImage: UIImage?
-    let trackURL: URL
+    var trackURL: URL
 }
