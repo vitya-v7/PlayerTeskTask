@@ -12,34 +12,34 @@ class PlayState: PlayerStateProtocol {
     static let shared = PlayState()
     private init() {}
     
-    func managerPlay(_ manager: PlayerManager) {}
+    func managerPlay(_ manager: PlayerManagerContext) {}
     
-    func managerStop(_ manager: PlayerManager) {
+    func managerStop(_ manager: PlayerManagerContext) {
         manager.setState(StopState.shared)
         manager.stop()
     }
     
-    func managerPause(_ manager: PlayerManager) {
+    func managerPause(_ manager: PlayerManagerContext) {
         manager.setState(PauseState.shared)
         manager.pause()
     }
     
-    func manager(_ manager: PlayerManager,
+    func manager(_ manager: PlayerManagerContext,
                  playTrackWithIndex trackIndex: Int) {
         manager.play(trackWithIndex: trackIndex)
     }
     
-    func managerNextTrackSelected(_ manager: PlayerManager) {
+    func managerNextTrackSelected(_ manager: PlayerManagerContext) {
         manager.changeOnNextTrack()
         manager.play()
     }
     
-    func managerPreviousTrackSelected(_ manager: PlayerManager) {
+    func managerPreviousTrackSelected(_ manager: PlayerManagerContext) {
         manager.changeOnPreviousTrack()
         manager.play()
     }
     
-    func manager(_ manager: PlayerManager,
+    func manager(_ manager: PlayerManagerContext,
                  rewindTrackWithPercentage percentage: Float) {
         manager.rewindTrack(with: percentage)
     }

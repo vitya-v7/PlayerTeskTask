@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2B90B623C35A920C781C7D17 /* libPods-PlayerTestTask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 619003E7605991A7EE97EE3B /* libPods-PlayerTestTask.a */; };
+		AD6DA8E9293E2A80007653B9 /* Mp3 tracks in Resources */ = {isa = PBXBuildFile; fileRef = AD6DA8E8293E2A7F007653B9 /* Mp3 tracks */; };
 		AD6DAB002934E19D0085AB8F /* PlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAAFF2934E19D0085AB8F /* PlayerManager.swift */; };
 		AD6DAB022934E3B80085AB8F /* TrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB012934E3B80085AB8F /* TrackModel.swift */; };
 		AD6DAB042934E68A0085AB8F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB032934E68A0085AB8F /* DataManager.swift */; };
@@ -17,6 +18,7 @@
 		AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */; };
 		AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */; };
 		AD810F9729391045007EFE66 /* PlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD810F9629391045007EFE66 /* PlayerState.swift */; };
+		AD88847F293F1E6E00FF3C7A /* Helpers in Resources */ = {isa = PBXBuildFile; fileRef = AD88847E293F1E6E00FF3C7A /* Helpers */; };
 		AD8E6BDB2938914D00AB3514 /* PlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E6BDA2938914D00AB3514 /* PlayState.swift */; };
 		AD8E6BDD2938915900AB3514 /* PauseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E6BDC2938915900AB3514 /* PauseState.swift */; };
 		AD8E6BDF2938916600AB3514 /* StopState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E6BDE2938916600AB3514 /* StopState.swift */; };
@@ -55,6 +57,7 @@
 /* Begin PBXFileReference section */
 		2005124482CE315E2F50690B /* Pods-PlayerTestTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayerTestTask.debug.xcconfig"; path = "Target Support Files/Pods-PlayerTestTask/Pods-PlayerTestTask.debug.xcconfig"; sourceTree = "<group>"; };
 		619003E7605991A7EE97EE3B /* libPods-PlayerTestTask.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlayerTestTask.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD6DA8E8293E2A7F007653B9 /* Mp3 tracks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Mp3 tracks"; sourceTree = "<group>"; };
 		AD6DAAFF2934E19D0085AB8F /* PlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerManager.swift; sourceTree = "<group>"; };
 		AD6DAB012934E3B80085AB8F /* TrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackModel.swift; sourceTree = "<group>"; };
 		AD6DAB032934E68A0085AB8F /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 		AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesCoordinator.swift; sourceTree = "<group>"; };
 		AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
 		AD810F9629391045007EFE66 /* PlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerState.swift; sourceTree = "<group>"; };
+		AD88847E293F1E6E00FF3C7A /* Helpers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Helpers; sourceTree = "<group>"; };
 		AD8E6BDA2938914D00AB3514 /* PlayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayState.swift; sourceTree = "<group>"; };
 		AD8E6BDC2938915900AB3514 /* PauseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseState.swift; sourceTree = "<group>"; };
 		AD8E6BDE2938916600AB3514 /* StopState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopState.swift; sourceTree = "<group>"; };
@@ -186,10 +190,12 @@
 		AD8E7D43292FCD4900B03BEF /* PlayerTestTask */ = {
 			isa = PBXGroup;
 			children = (
+				AD88847E293F1E6E00FF3C7A /* Helpers */,
 				AD8E6BD92938913200AB3514 /* PlayerManager */,
 				AD8E7977293720520090B424 /* TrackDetailModule */,
-				AD6DAB052934F5B40085AB8F /* Extensions */,
 				ADCAD4E82931F12B00830AF3 /* TracksListModule */,
+				AD6DAB052934F5B40085AB8F /* Extensions */,
+				AD6DA8E8293E2A7F007653B9 /* Mp3 tracks */,
 				AD8E7D44292FCD4900B03BEF /* AppDelegate.swift */,
 				AD8E7D46292FCD4900B03BEF /* SceneDelegate.swift */,
 				AD8E7D48292FCD4900B03BEF /* ViewController.swift */,
@@ -347,7 +353,9 @@
 			files = (
 				AD8E7D51292FCD4B00B03BEF /* LaunchScreen.storyboard in Resources */,
 				AD8E7D4E292FCD4B00B03BEF /* Assets.xcassets in Resources */,
+				AD6DA8E9293E2A80007653B9 /* Mp3 tracks in Resources */,
 				AD8E7D4C292FCD4900B03BEF /* Main.storyboard in Resources */,
+				AD88847F293F1E6E00FF3C7A /* Helpers in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +628,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -649,6 +658,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

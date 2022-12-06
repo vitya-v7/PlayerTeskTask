@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 struct TrackModel {
     let title: String
     let duration: String
-    let trackURL: URL?
+    let artworkImage: UIImage?
+    let trackURL: URL
 }

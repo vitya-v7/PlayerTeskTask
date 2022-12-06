@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,7 +13,7 @@
         <!--Tracks List View Controller-->
         <scene sceneID="QS8-qU-tDY">
             <objects>
-                <viewController id="GcV-gq-dpc" customClass="TracksListViewController" customModule="PlayerTestTask" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TrackListControllerID" id="GcV-gq-dpc" customClass="TracksListViewController" customModule="PlayerTestTask" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VXe-xv-jnS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -68,6 +69,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="GcV-gq-dpc" id="0kb-9c-wl1"/>
+                                    <outlet property="delegate" destination="GcV-gq-dpc" id="q3X-WI-n5q"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="m8f-c3-6vL"/>
@@ -174,13 +179,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="HV0-Ib-Q5U">
                                         <rect key="frame" x="16" y="16" width="382" height="18"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dK-gU-rxh">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dK-gU-rxh">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="18"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="fgB-WX-ifM"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="fgB-WX-ifM" userLabel=" "/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="volumeMinIcon"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="volumeMinIcon"/>
                                                 <connections>
                                                     <action selector="muteButtonAction:" destination="X2V-q8-58Z" eventType="touchUpInside" id="cVd-ZI-LG5"/>
                                                 </connections>
@@ -192,13 +197,13 @@
                                                     <action selector="volumeSliderHandler:" destination="X2V-q8-58Z" eventType="valueChanged" id="SWi-nV-06C"/>
                                                 </connections>
                                             </slider>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y1S-GG-mr8">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y1S-GG-mr8" userLabel=" ">
                                                 <rect key="frame" x="332" y="0.0" width="50" height="18"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="K4y-fV-Qvr"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="volumeMaxIcon"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="volumeMaxIcon"/>
                                                 <connections>
                                                     <action selector="maxLvlVolumeButtonAction:" destination="X2V-q8-58Z" eventType="touchUpInside" id="Lxi-iI-L6F"/>
                                                 </connections>
@@ -211,32 +216,26 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Wz1-rz-xVz">
                                         <rect key="frame" x="16" y="58" width="382" height="80"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VR1-j9-KLP">
-                                                <rect key="frame" x="0.0" y="0.0" width="116.5" height="80"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" image="previousBtn">
-                                                    <color key="baseBackgroundColor" name="playerViewColor"/>
-                                                </buttonConfiguration>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VR1-j9-KLP">
+                                                <rect key="frame" x="0.0" y="0.0" width="112" height="80"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="previousBtn"/>
                                                 <connections>
                                                     <action selector="previousButtonTapped:" destination="X2V-q8-58Z" eventType="touchUpInside" id="lzT-Eb-NbT"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJK-or-MAJ">
-                                                <rect key="frame" x="116.5" y="0.0" width="149" height="80"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" image="pauseBtn">
-                                                    <color key="baseBackgroundColor" name="playerViewColor"/>
-                                                </buttonConfiguration>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJK-or-MAJ">
+                                                <rect key="frame" x="112" y="0.0" width="158" height="80"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="" image="pauseBtn"/>
                                                 <connections>
                                                     <action selector="playButtonTapped:" destination="X2V-q8-58Z" eventType="touchUpInside" id="niV-nu-WlW"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d0-kT-Uom">
-                                                <rect key="frame" x="265.5" y="0.0" width="116.5" height="80"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="gray" image="nextBtn">
-                                                    <color key="baseBackgroundColor" name="playerViewColor"/>
-                                                </buttonConfiguration>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3d0-kT-Uom">
+                                                <rect key="frame" x="270" y="0.0" width="112" height="80"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="" image="nextBtn"/>
                                                 <connections>
                                                     <action selector="nextButtonTapped:" destination="X2V-q8-58Z" eventType="touchUpInside" id="gul-aP-rNY"/>
                                                 </connections>
@@ -280,11 +279,11 @@
                     <navigationItem key="navigationItem" id="fag-0T-FrB"/>
                     <connections>
                         <outlet property="albumImageView" destination="vqa-hD-2cW" id="JXe-RE-Tui"/>
-                        <outlet property="durationSlider" destination="q44-jP-mA6" id="qeS-XV-tol"/>
                         <outlet property="maxTimeLabel" destination="hEB-UB-tlO" id="3OV-sI-ZZP"/>
                         <outlet property="minTimeLabel" destination="IcB-w2-Gyd" id="btl-Ij-i5y"/>
                         <outlet property="playButton" destination="bJK-or-MAJ" id="bQf-5I-b3B"/>
                         <outlet property="songNameLabel" destination="jBu-q2-H2S" id="RhB-0H-Cv8"/>
+                        <outlet property="timeSlider" destination="q44-jP-mA6" id="Xf7-fE-Ocg"/>
                         <outlet property="volumeSlider" destination="1Ls-oX-uV5" id="Z8G-Li-vn8"/>
                     </connections>
                 </viewController>

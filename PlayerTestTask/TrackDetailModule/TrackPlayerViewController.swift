@@ -7,75 +7,75 @@
 
 import Foundation
 import UIKit
+import CoreMedia
 
-protocol TrackPlayerViewInput: AnyObject {
+protocol TrackPlayerViewInput: UIViewController {
+    func updatePlayButton(withImage image: UIImage)
+    func setSlidersThumb(withImage image: UIImage)
+    func updateTimeSlider(withValue value: Float)
+    func setMinTimeLabel(withString string: String)
+    func setMaxTimeLabel(withString string: String)
+    func setNameLabel(withString string: String)
 }
 
 protocol TrackPlayerViewOutput {
     func viewDidLoadDone()
     func viewDidAppearDone()
     func tracksCount() -> Int
-    var tracks: [TrackModel] { get }
+    func previousButtonTapped()
+    func nextButtonTapped()
+    func playButtonTapped()
+    func sliderTimeChanged(_ time: Float)
+    func sliderVolumeChanged(_ time: Float)
+    func maximumVolumeClicked()
+    func muteVolumeClicked()
 }
 
-class TrackPlayerViewController: UIViewController {
+class TrackPlayerViewController: UIViewController,
+                                 TrackPlayerViewInput {
     var output: TrackPlayerViewOutput?
     static let storyboardIdentifier = "TrackPlayerControllerID"
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        addNavBarImage(withTitle: "LogoIcon")
-        setSlidersThumbImage()
-        run(track)
-        updateUIOnPause()
-        self.output?.viewDidLoadDone()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.output?.viewDidAppearDone()
-    }
-    
+    @IBOutlet weak private var volumeSlider: UISlider!
+    @IBOutlet weak private var timeSlider: UISlider!
+    @IBOutlet weak private var songNameLabel: UILabel!
+    @IBOutlet weak private var playButton: UIButton!
+    @IBOutlet weak private var minTimeLabel: UILabel!
+    @IBOutlet weak private var maxTimeLabel: UILabel!
+    @IBOutlet weak private var albumImageView: UIImageView!
     
     // MARK: - IBActions
     @IBAction func previousButtonTapped(_ sender: UIButton) {
-        PlayerManager.shared.previousTrackClicked()
+        self.output?.previousButtonTapped()
     }
     
     @IBAction func playButtonTapped(_ sender: UIButton) {
-        if audioPlayer.timeControlStatus == .playing {
-            audioPlayer.pause()
-            playButton.setImage(UIImage(named: "playBtn"), for: .normal)
-        } else {
-            audioPlayer.play()
-            playButton.setImage(UIImage(named: "pauseBtn"), for: .normal)
+        self.output?.playButtonTapped()
+    }
+    
+    func updatePlayButton(withImage image: UIImage) {
+        DispatchQueue.main.async { [weak self] in
+            self?.playButton.setImage(image, for: .normal)
         }
-        
-        PlayerManager.shared.playClicked()
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        track = delegate?.playerViewControllerGetNextTrack(self)
-        run(track)
+        self.output?.nextButtonTapped()
     }
     
-    @IBAction private func durationSliderHandler(_ sender: UISlider) {
-        PlayerManager.shared.rewindTrack(with: durationSlider.value)
+    @IBAction private func durationSliderHandler(_ timeSlider: UISlider) {
+        self.output?.sliderTimeChanged(timeSlider.value)
     }
     
-    @IBAction private func volumeSliderHandler(_ sender: UISlider) {
-        audioPlayer.isMuted = false
-        audioPlayer.volume = volumeSlider.value
+    @IBAction private func volumeSliderHandler(_ timeSlider: UISlider) {
+        self.output?.sliderVolumeChanged(timeSlider.value)
     }
     
     @IBAction func muteButtonAction(_ sender: UIButton) {
-        audioPlayer.isMuted = true
-        volumeSlider.value = volumeSlider.minimumValue
+        self.output?.muteVolumeClicked()
     }
     
     @IBAction func maxLvlVolumeButtonAction(_ sender: UIButton) {
-        audioPlayer.isMuted = false
-        audioPlayer.volume = 1
+        self.output?.maximumVolumeClicked()
         volumeSlider.value = volumeSlider.maximumValue
     }
     
@@ -85,64 +85,45 @@ class TrackPlayerViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    private func run(_ track: Track?) {
-        PlayerManager.shared.compareCurrentIndex(
-            with: delegate?.playerViewControllerGetIndexCell(self) ?? 0,
-            track: track
-        )
-        updateLabels()
-        observePlayerDurationTime()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playerDidFinishPlaying),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: audioPlayer.currentItem
-        )
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.output?.viewDidLoadDone()
     }
     
-    @objc
-    private func playerDidFinishPlaying(note: NSNotification) {
-        track = delegate?.playerViewControllerGetNextTrack(self)
-        run(track)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.output?.viewDidAppearDone()
     }
     
-    private func updateLabels() {
-        songNameLabel.text = track?.title
-    }
-    
-    private func observePlayerDurationTime() {
-        let interval = CMTimeMake(value: 1, timescale: 2)
-        
-        audioPlayer.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
-            guard let self = self else { return }
-            
-            self.minTimeLabel.text = time.displayStringValue()
-            
-            if let durationTime = self.audioPlayer.currentItem?.duration {
-                let currentDurationText = (durationTime - time).displayStringValue()
-                self.maxTimeLabel.text = "\(currentDurationText)"
-                self.updateDurationSlider()
-            }
+    func setMinTimeLabel(withString string: String) {
+        DispatchQueue.main.async {
+            self.minTimeLabel.text = string
         }
     }
     
-    private func updateDurationSlider() {
-        durationSlider.value = PlayerManager.shared.getDurationValue()
-    }
-    
-    private func setSlidersThumbImage() {
-        durationSlider.setThumbImage(UIImage(named: "sliderKnob"), for: .normal)
-        volumeSlider.setThumbImage(UIImage(named: "sliderKnob"), for: .normal)
-    }
-    
-    private func updateUIOnPause() {
-        if audioPlayer.timeControlStatus == .paused {
-            playButton.setImage(UIImage(named: "playBtn"), for: .normal)
-            minTimeLabel.text = audioPlayer.currentTime().displayStringValue()
-            let diff = (audioPlayer.currentItem?.duration.seconds ?? 0) - audioPlayer.currentTime().seconds
-            maxTimeLabel.text = diff.asString(style: .positional)
-            updateDurationSlider()
+    func setMaxTimeLabel(withString string: String) {
+        DispatchQueue.main.async {
+            self.maxTimeLabel.text = string
         }
     }
+    
+    func setNameLabel(withString string: String) {
+        DispatchQueue.main.async {
+            self.songNameLabel.text = string
+        }
+    }
+    
+    func updateTimeSlider(withValue value: Float) {
+        DispatchQueue.main.async {
+            self.timeSlider.value = value
+        }
+    }
+    
+    func setSlidersThumb(withImage image: UIImage) {
+        DispatchQueue.main.async {            self.timeSlider.setThumbImage(image, for: .normal)
+            self.volumeSlider.setThumbImage(image, for: .normal)
+        }
+    }
+    
 }

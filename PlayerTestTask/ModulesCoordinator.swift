@@ -30,29 +30,38 @@ final class ModulesCoordinator {
         
         let presenter = TracksListPresenter()
         presenter.view = tracksListViewController
-        presenter.goToTrackPlayerScreen = { trackInfoModel in
-            self.showTrackPlayerScreen(withTrackModel: trackInfoModel)
+        presenter.goToTrackPlayerScreen = { audioPlayerManager, index in
+            self.showTrackPlayerScreen(withPlayerManager: audioPlayerManager,
+                                       andTrackWithIndex: index)
         }
         tracksListViewController.output = presenter
         self.navigationController?.pushViewController(tracksListViewController,
                                                      animated: false)
     }
     
-    
-    private func showTrackPlayerScreen(withTrackModel trackModel: TrackModel) {
+    private func showTrackPlayerScreen(withPlayerManager playerManager: PlayerManager,
+                                       andTrackWithIndex index: Int) {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let tracksListViewController = mainStoryboard.instantiateViewController(
-            withIdentifier: TrackPlayerViewController.storyboardIdentifier) as? TracksListViewController else {
-                  return
-              }
+        guard let tracksPlayerViewController = mainStoryboard.instantiateViewController(
+            withIdentifier: TrackPlayerViewController.storyboardIdentifier) as? TrackPlayerViewController else {
+                return
+            }
         
-        let presenter = TracksListPresenter()
-        presenter.view = tracksListViewController
-        presenter.goToTrackPlayerScreen = { trackInfoModel in
-            self.showTrackPlayerScreen(withTrackModel: trackInfoModel)
+        let presenter = TrackPlayerPresenter(withPlayerManager: playerManager,
+                                             andIndex: index)
+        presenter.view = tracksPlayerViewController
+        tracksPlayerViewController.output = presenter
+        self.navigationController?.pushViewController(tracksPlayerViewController,
+                                                      animated: false)
+    }
+    
+    func showDocumentPickerScreen(withDocumentDelegate documentDelegate: UIDocumentPickerDelegate) {
+        DispatchQueue.main.async {
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.audio])
+            documentPicker.delegate = documentDelegate
+            documentPicker.allowsMultipleSelection = false
+            self.navigationController?.present(documentPicker,
+                                               animated: true)
         }
-        tracksListViewController.output = presenter
-        self.navigationController?.pushViewController(tracksListViewController,
-                                                     animated: false)
     }
 }

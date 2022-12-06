@@ -10,10 +10,15 @@ import Foundation
 class TracksListPresenter: TracksListViewOutput {
     weak var view: TracksListViewInput?
    
+    var goToTrackPlayerScreen: ((PlayerManager, Int) -> Void)?
+    var playerManager: PlayerManager
     
-    var goToTrackPlayerScreen: ((TrackModel) -> Void)?
+    init() {
+        self.playerManager = PlayerManager()
+    }
     
     func viewDidLoadDone() {
+        self.view?.setupNavBar()
     }
     
     func viewDidAppearDone() {
@@ -21,10 +26,14 @@ class TracksListPresenter: TracksListViewOutput {
     }
     
     func tracksCount() -> Int {
-        return DataManager.shared.getUrls().count
+        return self.playerManager.getTracksCount()
     }
     
     func getTrack(withIndex index: Int) -> TrackModel? {
-        PlayerManager.shared.getTrack(withIndex: index)
+        self.playerManager.getTrack(withIndex: index)
+    }
+    
+    func rowDidSelected(atIndexPath indexPath: IndexPath) {
+        self.goToTrackPlayerScreen?(self.playerManager, indexPath.item)
     }
 }

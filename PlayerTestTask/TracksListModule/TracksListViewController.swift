@@ -8,7 +8,9 @@
 import Foundation
 import UIKit
 
-protocol TracksListViewInput: AnyObject {
+protocol TracksListViewInput: UIViewController {
+    func setupNavBar()
+    func setTableRowHeight(_ height: Float)
 }
 
 protocol TracksListViewOutput {
@@ -16,6 +18,7 @@ protocol TracksListViewOutput {
     func viewDidAppearDone()
     func tracksCount() -> Int
     func getTrack(withIndex: Int) -> TrackModel?
+    func rowDidSelected(atIndexPath indexPath: IndexPath)
 }
 
 class TracksListViewController: UIViewController, TracksListViewInput {
@@ -25,8 +28,6 @@ class TracksListViewController: UIViewController, TracksListViewInput {
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = 40
-        self.setupNavBar()
         self.output?.viewDidLoadDone()
     }
     
@@ -35,7 +36,13 @@ class TracksListViewController: UIViewController, TracksListViewInput {
         self.output?.viewDidAppearDone()
     }
     
-    private func setupNavBar() {
+    func setupNavBar() {
+        if !Thread.current.isMainThread {
+            DispatchQueue.main.async {
+                self.setupNavBar()
+            }
+            return
+        }
         let navBarAppearance = UINavigationBarAppearance()
         
         navBarAppearance.backgroundColor = UIColor(named: "navBarColor")
@@ -52,6 +59,18 @@ class TracksListViewController: UIViewController, TracksListViewInput {
         addNavBarImage(withTitle: "Playlist")
     }
     
+    func setTableRowHeight(_ height: Float) {
+        DispatchQueue.main.async {
+            self.tableView.rowHeight = CGFloat(height)
+        }
+    }
+    
+}
+
+extension TracksListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.view.bounds.height / 10.0
+    }
 }
 
 extension TracksListViewController: UITableViewDataSource {
@@ -84,14 +103,6 @@ extension TracksListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let selectedCell = tableView.cellForRow(at: indexPath) {
-            tableView.visibleCells.forEach { cell in
-                if cell == selectedCell && cell.isSelected {
-                    cell.setHighlighted(true, animated: true)
-                } else {
-                    cell.setHighlighted(false, animated: true)
-                }
-            }
-        }
+        self.output?.rowDidSelected(atIndexPath: indexPath)
     }
 }

@@ -7,14 +7,17 @@
 
 import Foundation
 import AVFoundation
+import UIKit
 
 class DataManager {
         
     static let shared = DataManager()
-    private let trackAssets: [AVURLAsset]
+    private var trackAssets: [AVURLAsset]
     private init() {
         
-        let bundleURLs = getUrls()
+        guard
+            let bundleURLs = Bundle.main.urls(forResourcesWithExtension: "mp3", subdirectory: "Mp3 tracks")
+        else { fatalError("Failed to get urls") }
         self.trackAssets = []
         for url in bundleURLs {
             let asset = AVURLAsset(url: url)
@@ -22,40 +25,42 @@ class DataManager {
         }
     }
     
-    func getUrls() -> [URL] {
-        guard
-            let bundleURLs = Bundle.main.urls(forResourcesWithExtension: "mp3", subdirectory: nil)
-        else { fatalError("Failed to get urls") }
+    func getTracks() -> [TrackModel] {
+        var trackModels = [TrackModel]()
         
-        return bundleURLs
-    }
-    
-    func getFileNames() -> [String] {
-        var fileNames = [String]()
-        
-        for asset in trackAssets {
+        for asset in self.trackAssets {
             let items = AVMetadataItem.metadataItems(from: asset.metadata, with: .current)
-            
-            if !items.isEmpty {
-                for item in items where item.commonKey == .commonKeyTitle {
-                    fileNames.append(item.stringValue ?? "")
+            var title = asset.url.deletingPathExtension().lastPathComponent
+            let audioDuration = asset.duration.displayStringValue()
+            var artwork = UIImage(named: "cover")
+            for item in items {
+                guard let commonKey = item.commonKey else {
+                    continue
                 }
-            } else {
-                fileNames.append(asset.url.lastPathComponent)
+                var artistName: String?
+                var trackName: String?
+                
+                switch commonKey {
+                case .commonKeyArtist:
+                    artistName = item.stringValue
+                case .commonKeyTitle:
+                    trackName = item.stringValue
+                case .commonKeyArtwork:
+                    artwork = UIImage(named: item.stringValue ?? "cover")
+                default:
+                    break
+                }
+                if let artistName = artistName,
+                   let trackName = trackName {
+                    title = artistName + " - " + trackName
+                }
             }
+            
+            trackModels.append(TrackModel(title: title,
+                                          duration: audioDuration,
+                                          artworkImage: artwork,
+                                          trackURL: asset.url))
         }
-        
-        return fileNames
-    }
-    
-    func getSongDurations() -> [String] {
-        var durations = [String]()
-        
-        for asset in trackAssets {
-            let audioDuration = asset.duration
-            durations.append(audioDuration.displayStringValue())
-        }
-        
-        return durations
+        return trackModels
     }
 }

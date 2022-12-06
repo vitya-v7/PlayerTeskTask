@@ -18,4 +18,16 @@ class TrackTableViewCell: UITableViewCell {
         trackDutationLabel.text = track.duration
         musicNoteImage.highlightedImage = UIImage(named: "soundIcon Active")
     }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        if selected {
+            self.setHighlighted(true,
+                                animated: true)
+        } else {
+            self.setHighlighted(false,
+                                animated: true)
+        }
+    }
+    
+    
 }
