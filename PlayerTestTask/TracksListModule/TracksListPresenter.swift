@@ -16,12 +16,16 @@ class TracksListPresenter: TracksListViewOutput {
     var goToItunesScreen: ((MPMediaPickerControllerDelegate) -> Void)?
     var goToGalleryScreen: ((GalleryDelegate) -> Void)?
     var goToFilesScreen: ((UIDocumentPickerDelegate) -> Void)?
-    
+    var itunesHelper = MusicFilesHelper()
+    var appFilesHelper = FilesAppHelper()
+    var galleryHelper = GalleryHelper()
     var playerManager: PlayerManager
     
     init() {
-        
         self.playerManager = PlayerManager()
+        self.appFilesHelper.delegate = self
+        self.galleryHelper.delegate = self
+        self.itunesHelper.delegate = self
     }
     
     func viewDidLoadDone() {
@@ -45,18 +49,38 @@ class TracksListPresenter: TracksListViewOutput {
     }
     
     func openItunesClicked() {
-        self.goToItunesScreen?(self)
+        self.goToItunesScreen?(self.itunesHelper)
     }
     
     func openGalleryClicked() {
-        self.goToGalleryScreen?(self)
+        self.goToGalleryScreen?(self.galleryHelper)
     }
     
     func openFilesClicked() {
-        self.goToFilesScreen?(self)
+        self.goToFilesScreen?(self.appFilesHelper)
     }
 }
 
-extension TracksListPresenter: MPMediaPickerControllerDelegate {
-    
+extension TracksListPresenter: GalleryHelperDelegate {
+    func galleryHelper(_ galleryHelper: GalleryHelper,
+                       itemsHasBeenChanged items: [TrackModel]) {
+        playerManager.addTracks(withModels: items)
+        self.view?.reloadTableView()
+    }
+}
+
+extension TracksListPresenter: MusicFilesHelperDelegate {
+    func itunesHelper(_ itunesHelper: MusicFilesHelper,
+                      itemsHasBeenChanged items: [TrackModel]) {
+        playerManager.addTracks(withModels: items)
+        self.view?.reloadTableView()
+    }
+}
+
+extension TracksListPresenter: FilesAppHelperDelegate {
+    func appFilesHelper(_ appFilesHelper: FilesAppHelper,
+                        itemsHasBeenChanged items: [TrackModel]) {
+        playerManager.addTracks(withModels: items)
+        self.view?.reloadTableView()
+    }
 }

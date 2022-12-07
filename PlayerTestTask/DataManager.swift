@@ -27,12 +27,13 @@ class DataManager {
     
     func getTracks(byUrl urls: [URL]? = nil) -> [TrackModel] {
         var assets = self.libraryTrackAssets
-        if let urls = urls, urls.count > 0 {
+        if let urls = urls, !urls.isEmpty {
             assets = []
             for url in urls {
                 assets.append(AVURLAsset(url: url))
             }
         }
+        
         var trackModels = [TrackModel]()
         
         for asset in assets {

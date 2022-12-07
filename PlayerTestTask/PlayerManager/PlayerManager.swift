@@ -90,6 +90,10 @@ class PlayerManager: PlayerManagerProtocol {
         return self.defaultTracks.count
     }
     
+    func addTracks(withModels trackModels: [TrackModel]) {
+        self.defaultTracks.append(contentsOf: trackModels)
+    }
+    
     func playClicked() {
         self.currentState.managerPlay(self)
     }

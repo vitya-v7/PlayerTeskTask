@@ -35,6 +35,15 @@ final class ModulesCoordinator {
             self.showTrackPlayerScreen(withPlayerManager: audioPlayerManager,
                                        andTrackWithIndex: index)
         }
+        presenter.goToFilesScreen = { delegate in
+            self.showDocumentPickerScreen(withDocumentDelegate: delegate)
+        }
+        presenter.goToItunesScreen = { delegate in
+            self.showMediaPickerScreen(withMediaDelegate: delegate)
+        }
+        presenter.goToGalleryScreen = { delegate in
+            self.showGalleryPickerScreen(withGalleryDelegate: delegate)
+        }
         tracksListViewController.output = presenter
         self.navigationController?.pushViewController(tracksListViewController,
                                                      animated: false)

@@ -11,6 +11,7 @@ import UIKit
 protocol TracksListViewInput: UIViewController {
     func setupNavBar()
     func setTableRowHeight(_ height: Float)
+    func reloadTableView()
 }
 
 protocol TracksListViewOutput {
@@ -77,6 +78,12 @@ class TracksListViewController: UIViewController, TracksListViewInput {
     func setTableRowHeight(_ height: Float) {
         DispatchQueue.main.async {
             self.tableView.rowHeight = CGFloat(height)
+        }
+    }
+    
+    func reloadTableView() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
     
