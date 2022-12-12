@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerSlider" customModule="PlayerTestTask" customModuleProvider="target">
+            <connections>
+                <outlet property="pastLabel" destination="jK9-au-4hn" id="E4w-Aa-fpt"/>
+                <outlet property="remainLabel" destination="NvC-Zm-lUs" id="CfR-Bp-zbT"/>
+                <outlet property="sliderView" destination="xMf-y4-24n" id="AwJ-aR-9sa"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="440" height="104"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jK9-au-4hn">
+                    <rect key="frame" x="30" y="49.5" width="34" height="14.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NvC-Zm-lUs">
+                    <rect key="frame" x="376" y="49.5" width="34" height="14.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xMf-y4-24n" customClass="CustomSliderControl" customModule="PlayerTestTask" customModuleProvider="target">
+                    <rect key="frame" x="30" y="0.0" width="380" height="41.5"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="xMf-y4-24n" firstAttribute="leading" secondItem="jK9-au-4hn" secondAttribute="leading" id="GD1-CJ-ys0"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jK9-au-4hn" secondAttribute="bottom" id="H6b-1E-lWX"/>
+                <constraint firstItem="xMf-y4-24n" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="IF3-52-CTU"/>
+                <constraint firstItem="xMf-y4-24n" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.4" priority="999" id="M2Z-mT-gcZ"/>
+                <constraint firstItem="xMf-y4-24n" firstAttribute="trailing" secondItem="NvC-Zm-lUs" secondAttribute="trailing" id="Nl9-ho-dCJ"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="NvC-Zm-lUs" secondAttribute="bottom" id="S3f-QG-aWK"/>
+                <constraint firstItem="NvC-Zm-lUs" firstAttribute="top" secondItem="xMf-y4-24n" secondAttribute="bottom" constant="8" id="ft3-WJ-wdM"/>
+                <constraint firstItem="jK9-au-4hn" firstAttribute="top" secondItem="xMf-y4-24n" secondAttribute="bottom" constant="8" id="hFu-PZ-2uL"/>
+                <constraint firstItem="xMf-y4-24n" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="sM4-4p-eaE"/>
+                <constraint firstItem="xMf-y4-24n" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sZk-Cq-676"/>
+                <constraint firstAttribute="trailing" secondItem="xMf-y4-24n" secondAttribute="trailing" constant="30" id="tnf-DG-FU1"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-46.399999999999999" y="-428.18590704647681"/>
+        </view>
+    </objects>
+</document>

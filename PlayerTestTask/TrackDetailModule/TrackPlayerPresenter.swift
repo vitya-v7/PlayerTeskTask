@@ -9,32 +9,33 @@ import Foundation
 import UIKit
 import CoreMedia
 
-class TrackPlayerPresenter: TrackPlayerViewOutput {
-    
+class TrackPlayerPresenter: TrackPlayerViewOutput,
+                            PlayerManagerDelegate {
+ 
     var playerManager: PlayerManagerProtocol
     weak var view: TrackPlayerViewInput?
     
     init(withPlayerManager playerManager: PlayerManager,
          andIndex index: Int) {
         self.playerManager = playerManager
-        self.playerManager.replaceTrack(withTrackWithIndex: index)
-        self.playerManager.playClicked()
+        self.playerManager.setCurrentTrackIndex(index)
+        self.playerManager.setDelegate(self)
     }
     
     @objc
     private func playerDidFinishPlaying(note: NSNotification) {
-        self.playerManager.nextTrackClicked()
+        self.nextButtonTapped()
     }
     
     func observePlayerDurationTime() {
-        let interval = CMTimeMake(value: 1, timescale: 2)
+        let interval = CMTimeMake(value: 1, timescale: 60000)
         
         self.playerManager.addPeriodicObserver(forInterval: interval, queue: .main) { [weak self] time in
             guard let self = self else { return }
             self.updateDurationTrackAppearance(withCurrentTime: time)
         }
     }
-    
+        
     func viewDidLoadDone() {
         NotificationCenter.default.addObserver(
             self,
@@ -42,15 +43,21 @@ class TrackPlayerPresenter: TrackPlayerViewOutput {
             name: .AVPlayerItemDidPlayToEndTime,
             object: nil
         )
-        self.view?.addNavBarImage(withTitle: "LogoIcon")
+        
+        self.view?.setupNavigationBar()
         self.observePlayerDurationTime()
         self.updateTrackAppearance()
-        self.playerManager.playClicked()
+        
+        self.playerManager.replaceTrack {
+            self.playerManager.playClicked()
+        }
     }
     
     func viewDidAppearDone() {
         self.updateTrackAppearance()
     }
+    
+    func viewDidDisappearDone() {}
     
     func updateTrackAppearance() {
         guard let track = self.playerManager.getCurrentTrack() else {
@@ -58,25 +65,37 @@ class TrackPlayerPresenter: TrackPlayerViewOutput {
         }
         
         self.view?.setNameLabel(withString: track.title)
-        if let thumbImage = UIImage(named: "sliderKnob") {
-            self.view?.setSlidersThumb(withImage: thumbImage)
-        }
         self.updateDurationTrackAppearance(withCurrentTime: self.playerManager.getCurrentTime())
         self.updatePlayButtonImage()
-       
+        if let artworkImage = track.artworkImage {
+            self.view?.setAlbumImageView(artworkImage)
+        }
     }
     
     func updateDurationTrackAppearance(withCurrentTime currentTime: CMTime) {
-        self.view?.setMinTimeLabel(withString: "\(currentTime.displayStringValue())")
         
         let durationTime = self.playerManager.getDuration()
-        let currentDurationText = (durationTime - currentTime).displayStringValue()
-        self.view?.setMaxTimeLabel(withString: "\(currentDurationText)")
-        self.view?.updateTimeSlider(withValue: self.playerManager.getNormalizedCurrentTime())
+        let pastTime = Float(currentTime.seconds)
+        let remainTime = Float((durationTime - currentTime).seconds)
+        self.view?.updateTimeSlider(withProgress: pastTime / Float(durationTime.seconds))
+        self.view?.setMinTimeLabel(withValue: pastTime,
+                                   andMaxTimeLabelWithValue: remainTime)
+    }
+    
+    func sliderTimeBeganChange() {
+        self.playerManager.removePeriodicTimeObserver()
     }
     
     func sliderTimeChanged(_ time: Float) {
         playerManager.rewind(withPercentageClicked: time)
+        self.observePlayerDurationTime()
+    }
+    
+    func sliderTimeDragged(_ time: Float) {
+        let duration = Float(self.playerManager.getDuration().seconds)
+        let currentTime = self.playerManager.time(byPercentage: time)
+        self.view?.setTimeOnSlider(pastTime: currentTime,
+                                   remainTime: duration - currentTime)
     }
     
     func tracksCount() -> Int {
@@ -85,12 +104,16 @@ class TrackPlayerPresenter: TrackPlayerViewOutput {
     
     func previousButtonTapped() {
         self.playerManager.previousTrackClicked()
-        self.view?.updateTimeSlider(withValue: 0)
+        self.updateTrackAppearance()
+        self.updateDurationTrackAppearance(
+            withCurrentTime: CMTime(seconds: 0, preferredTimescale: 60000))
     }
     
     func nextButtonTapped() {
         self.playerManager.nextTrackClicked()
-        self.view?.updateTimeSlider(withValue: 0)
+        self.updateTrackAppearance()
+        self.updateDurationTrackAppearance(
+            withCurrentTime: CMTime(seconds: 0, preferredTimescale: 60000))
     }
     
     func playButtonTapped() {
@@ -99,15 +122,10 @@ class TrackPlayerPresenter: TrackPlayerViewOutput {
     }
     
     func updatePlayButtonImage() {
-        var image: UIImage?
-        if self.playerManager.getCurrentState() == .play {
-            image = UIImage(named: "playBtn")
-        } else {
-            image = UIImage(named: "pauseBtn")
+        guard let image = self.playerManager.getButtonImage() else {
+            return
         }
-        if let image = image {
-            self.view?.updatePlayButton(withImage: image)
-        }
+        self.view?.updatePlayButton(withImage: image)
     }
     
     func sliderValueChanged(_ percentage: Float) {
@@ -127,4 +145,3 @@ class TrackPlayerPresenter: TrackPlayerViewOutput {
     }
     
 }
-

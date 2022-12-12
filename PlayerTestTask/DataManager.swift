@@ -23,6 +23,19 @@ class DataManager {
             let asset = AVURLAsset(url: url)
             self.libraryTrackAssets.append(asset)
         }
+        guard let savedURLs = FileManager.default.getDocumentDirectoryURL() else {
+            return
+        }
+        do {
+            let fileURLs = try FileManager.default.contentsOfDirectory(at: savedURLs, includingPropertiesForKeys: nil)
+            for url in fileURLs {
+                let asset = AVURLAsset(url: url)
+                self.libraryTrackAssets.append(asset)
+            }
+            
+        } catch {
+            print("No added files")
+        }
     }
     
     func getTracks(byUrl urls: [URL]? = nil) -> [TrackModel] {
@@ -37,7 +50,9 @@ class DataManager {
         var trackModels = [TrackModel]()
         
         for asset in assets {
-            let items = AVMetadataItem.metadataItems(from: asset.metadata, with: .current)
+            let items = AVMetadataItem.metadataItems(from: asset.metadata,
+                                                     withKey: AVMetadataKey.commonKeyArtwork,
+                                                     keySpace: .common)
             var title = asset.url.deletingPathExtension().lastPathComponent
             let audioDuration = asset.duration.displayStringValue()
             var artwork = UIImage(named: "cover")
@@ -54,7 +69,10 @@ class DataManager {
                 case .commonKeyTitle:
                     trackName = item.stringValue
                 case .commonKeyArtwork:
-                    artwork = UIImage(named: item.stringValue ?? "cover")
+                    if let imageData = item.value as? Data,
+                       let artworkImage = UIImage(data: imageData) {
+                        artwork = artworkImage
+                    }
                 default:
                     break
                 }

@@ -9,13 +9,15 @@ import Foundation
 import UIKit
 
 protocol TracksListViewInput: UIViewController {
-    func setupNavBar()
+    func setupNavigationBar()
     func setTableRowHeight(_ height: Float)
     func reloadTableView()
+    func selectCellWithIndexPath(_ indexPath: IndexPath)
 }
 
 protocol TracksListViewOutput {
     func viewDidLoadDone()
+    func viewWillAppearDone()
     func viewDidAppearDone()
     func tracksCount() -> Int
     func getTrack(withIndex: Int) -> TrackModel?
@@ -23,13 +25,18 @@ protocol TracksListViewOutput {
     func openItunesClicked()
     func openGalleryClicked()
     func openFilesClicked()
+    var selectedRow: Int { get }
 }
 
 class TracksListViewController: UIViewController, TracksListViewInput {
     @IBOutlet var tableView: UITableView!
     var output: TracksListViewOutput?
     static let storyboardIdentifier = "TrackListControllerID"
-     
+    
+    @IBOutlet weak var itunesButton: UIButton!
+    @IBOutlet weak var galleryButton: UIButton!
+    @IBOutlet weak var filesButton: UIButton!
+    
     @IBAction func openItunes(_ sender: Any) {
         self.output?.openItunesClicked()
     }
@@ -44,7 +51,15 @@ class TracksListViewController: UIViewController, TracksListViewInput {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.itunesButton.layer.cornerRadius = 8.0
+        self.galleryButton.layer.cornerRadius = 8.0
+        self.filesButton.layer.cornerRadius = 8.0
         self.output?.viewDidLoadDone()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.output?.viewWillAppearDone()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,10 +67,22 @@ class TracksListViewController: UIViewController, TracksListViewInput {
         self.output?.viewDidAppearDone()
     }
     
-    func setupNavBar() {
+    func selectCellWithIndexPath(_ indexPath: IndexPath) {
+        if !Thread.isMainThread {
+            DispatchQueue.main.async {
+                self.selectCellWithIndexPath(indexPath)
+            }
+            return
+        }
+        self.tableView.selectRow(at: indexPath,
+                                 animated: false,
+                                 scrollPosition: .none)
+    }
+    
+    func setupNavigationBar() {
         if !Thread.current.isMainThread {
             DispatchQueue.main.async {
-                self.setupNavBar()
+                self.setupNavigationBar()
             }
             return
         }
@@ -64,15 +91,16 @@ class TracksListViewController: UIViewController, TracksListViewInput {
         navBarAppearance.backgroundColor = UIColor(named: "navBarColor")
         
         let backImage = UIImage(named: "backBtn")
-        navBarAppearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
+        navBarAppearance.setBackIndicatorImage(backImage,
+                                               transitionMaskImage: backImage)
         
-        navigationController?.navigationBar.standardAppearance = navBarAppearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         
-        navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = UIColor(named: "appGreenColor")
+        self.navigationItem.backButtonTitle = ""
+        self.navigationController?.navigationBar.tintColor = UIColor(named: "appGreenColor")
         
-        addNavBarImage(withTitle: "Playlist")
+        self.navigationItem.title = "Playlist"
     }
     
     func setTableRowHeight(_ height: Float) {
@@ -120,11 +148,13 @@ extension TracksListViewController: UITableViewDataSource {
         let view = UIView()
         view.backgroundColor = UIColor(named: "appGreenColor")
         cell.selectedBackgroundView = view
-        
+        cell.setHighlighted(output.selectedRow == indexPath.item,
+                            animated: true)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.output?.rowDidSelected(atIndexPath: indexPath)
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
 }

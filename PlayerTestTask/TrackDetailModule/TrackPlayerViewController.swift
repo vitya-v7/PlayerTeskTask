@@ -11,21 +11,27 @@ import CoreMedia
 
 protocol TrackPlayerViewInput: UIViewController {
     func updatePlayButton(withImage image: UIImage)
-    func setSlidersThumb(withImage image: UIImage)
-    func updateTimeSlider(withValue value: Float)
-    func setMinTimeLabel(withString string: String)
-    func setMaxTimeLabel(withString string: String)
+    func updateTimeSlider(withProgress progress: Float)
+    func setMinTimeLabel(withValue pastValue: Float,
+                         andMaxTimeLabelWithValue remainValue: Float)
     func setNameLabel(withString string: String)
+    func setAlbumImageView(_ image: UIImage)
+    func setupNavigationBar()
+    func setTimeOnSlider(pastTime: Float,
+                         remainTime: Float)
 }
 
 protocol TrackPlayerViewOutput {
     func viewDidLoadDone()
     func viewDidAppearDone()
+    func viewDidDisappearDone()
     func tracksCount() -> Int
     func previousButtonTapped()
     func nextButtonTapped()
     func playButtonTapped()
+    func sliderTimeBeganChange()
     func sliderTimeChanged(_ time: Float)
+    func sliderTimeDragged(_ time: Float)
     func sliderVolumeChanged(_ time: Float)
     func maximumVolumeClicked()
     func muteVolumeClicked()
@@ -36,12 +42,11 @@ class TrackPlayerViewController: UIViewController,
     var output: TrackPlayerViewOutput?
     static let storyboardIdentifier = "TrackPlayerControllerID"
     @IBOutlet weak private var volumeSlider: UISlider!
-    @IBOutlet weak private var timeSlider: UISlider!
+    @IBOutlet weak private var timeSlider: PlayerSlider!
     @IBOutlet weak private var songNameLabel: UILabel!
     @IBOutlet weak private var playButton: UIButton!
-    @IBOutlet weak private var minTimeLabel: UILabel!
-    @IBOutlet weak private var maxTimeLabel: UILabel!
     @IBOutlet weak private var albumImageView: UIImageView!
+    @IBOutlet weak private var noteImage: UIImageView!
     
     // MARK: - IBActions
     @IBAction func previousButtonTapped(_ sender: UIButton) {
@@ -54,24 +59,24 @@ class TrackPlayerViewController: UIViewController,
     
     func updatePlayButton(withImage image: UIImage) {
         DispatchQueue.main.async { [weak self] in
-            self?.playButton.setImage(image, for: .normal)
+            guard let self = self else {
+                return
+            }
+            self.playButton.setImage(image, for: .normal)
         }
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         self.output?.nextButtonTapped()
     }
-    
-    @IBAction private func durationSliderHandler(_ timeSlider: UISlider) {
-        self.output?.sliderTimeChanged(timeSlider.value)
-    }
-    
+        
     @IBAction private func volumeSliderHandler(_ timeSlider: UISlider) {
         self.output?.sliderVolumeChanged(timeSlider.value)
     }
     
     @IBAction func muteButtonAction(_ sender: UIButton) {
         self.output?.muteVolumeClicked()
+        volumeSlider.value = volumeSlider.minimumValue
     }
     
     @IBAction func maxLvlVolumeButtonAction(_ sender: UIButton) {
@@ -88,6 +93,7 @@ class TrackPlayerViewController: UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.timeSlider.delegate = self
         self.output?.viewDidLoadDone()
     }
     
@@ -96,15 +102,35 @@ class TrackPlayerViewController: UIViewController,
         self.output?.viewDidAppearDone()
     }
     
-    func setMinTimeLabel(withString string: String) {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.output?.viewDidDisappearDone()
+    }
+    
+    func setTimeOnSlider(pastTime: Float,
+                         remainTime: Float) {
+        self.timeSlider.setTime(withPastTime: pastTime,
+                                andRemainTime: remainTime)
+    }
+    
+    func setAlbumImageView(_ image: UIImage) {
         DispatchQueue.main.async {
-            self.minTimeLabel.text = string
+            self.albumImageView.image = image
         }
     }
     
-    func setMaxTimeLabel(withString string: String) {
+    func setupNavigationBar() {
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.backgroundColor = UIColor(named: "navBarColor")
+        self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+        self.navigationItem.title = "Player"
+    }
+    
+    func setMinTimeLabel(withValue pastValue: Float,
+                         andMaxTimeLabelWithValue remainValue: Float) {
         DispatchQueue.main.async {
-            self.maxTimeLabel.text = string
+            self.timeSlider.setTime(withPastTime: pastValue,
+                                    andRemainTime: remainValue)
         }
     }
     
@@ -114,16 +140,24 @@ class TrackPlayerViewController: UIViewController,
         }
     }
     
-    func updateTimeSlider(withValue value: Float) {
-        DispatchQueue.main.async {
-            self.timeSlider.value = value
-        }
+    func updateTimeSlider(withProgress progress: Float) {
+        self.timeSlider.updateProgress(withValue: progress)
+    }
+}
+
+extension TrackPlayerViewController: PlayerSliderDelegate {
+    
+    func playerSliderValueBeganChange(_ playerSlider: PlayerSlider) {
+        self.output?.sliderTimeBeganChange()
     }
     
-    func setSlidersThumb(withImage image: UIImage) {
-        DispatchQueue.main.async {            self.timeSlider.setThumbImage(image, for: .normal)
-            self.volumeSlider.setThumbImage(image, for: .normal)
-        }
+    func playerSlider(_ playerSlider: PlayerSlider,
+                      onSliderValueChanged progress: Float) {
+        self.output?.sliderTimeDragged(progress)
     }
     
+    func playerSlider(_ playerSlider: PlayerSlider,
+                      rewindPlayerOnSliderValue progress: Float) {
+        self.output?.sliderTimeChanged(progress)
+    }
 }

@@ -35,18 +35,18 @@ final class ModulesCoordinator {
             self.showTrackPlayerScreen(withPlayerManager: audioPlayerManager,
                                        andTrackWithIndex: index)
         }
-        presenter.goToFilesScreen = { delegate in
-            self.showDocumentPickerScreen(withDocumentDelegate: delegate)
+        presenter.goToFilesScreen = { helper in
+            self.showDocumentPickerScreen(withDocumentDelegate: helper)
         }
-        presenter.goToItunesScreen = { delegate in
-            self.showMediaPickerScreen(withMediaDelegate: delegate)
+        presenter.goToItunesScreen = { helper in
+            self.showMediaPickerScreen(withMediaDelegate: helper)
         }
-        presenter.goToGalleryScreen = { delegate in
-            self.showGalleryPickerScreen(withGalleryDelegate: delegate)
+        presenter.goToGalleryScreen = { helper in
+            self.showGalleryPickerScreen(withGalleryDelegate: helper)
         }
         tracksListViewController.output = presenter
         self.navigationController?.pushViewController(tracksListViewController,
-                                                     animated: false)
+                                                      animated: false)
     }
     
     private func showTrackPlayerScreen(withPlayerManager playerManager: PlayerManager,
@@ -65,7 +65,7 @@ final class ModulesCoordinator {
                                                       animated: false)
     }
     
-    func showDocumentPickerScreen(withDocumentDelegate documentDelegate: UIDocumentPickerDelegate) {
+    func showDocumentPickerScreen(withDocumentDelegate documentDelegate: FilesAppHelper) {
         DispatchQueue.main.async {
             let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.audio])
             documentPicker.delegate = documentDelegate
@@ -75,23 +75,39 @@ final class ModulesCoordinator {
         }
     }
     
-    func showMediaPickerScreen(withMediaDelegate mediaDelegate: MPMediaPickerControllerDelegate) {
+    func showMediaPickerScreen(withMediaDelegate mediaDelegate: MusicFilesHelper) {
         DispatchQueue.main.async {
-            let mediaPicker = MPMediaPickerController()
-            mediaPicker.delegate = mediaDelegate
-            mediaPicker.allowsPickingMultipleItems = false
-            self.navigationController?.present(mediaPicker,
-                                              animated: false)
+            guard let topController = self.navigationController?.topViewController else {
+                return
+            }
+            mediaDelegate.requestItemsInViewController(inViewController: topController) {
+                let mediaPicker = MPMediaPickerController()
+                mediaPicker.delegate = mediaDelegate
+                mediaPicker.allowsPickingMultipleItems = false
+                DispatchQueue.main.async {
+                    self.navigationController?.present(mediaPicker,
+                                                       animated: false)
+                }
+            }
         }
     }
     
-    func showGalleryPickerScreen(withGalleryDelegate galleryDelegate: UIImagePickerControllerDelegate & UINavigationControllerDelegate) {
+    func showGalleryPickerScreen(withGalleryDelegate galleryDelegate: GalleryHelper) {
         DispatchQueue.main.async {
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.sourceType = .savedPhotosAlbum
-            imagePickerController.delegate = galleryDelegate
-            imagePickerController.mediaTypes = ["public.movie"]
-            self.navigationController?.present(imagePickerController, animated: true, completion: nil)
+            guard let topController = self.navigationController?.topViewController else {
+                return
+            }
+            galleryDelegate.requestItemsInViewController(inViewController: topController) {
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.sourceType = .savedPhotosAlbum
+                imagePickerController.delegate = galleryDelegate
+                imagePickerController.mediaTypes = ["public.movie"]
+                DispatchQueue.main.async {
+                    self.navigationController?.present(imagePickerController,
+                                                       animated: true,
+                                                       completion: nil)
+                }
+            }
         }
     }
 }

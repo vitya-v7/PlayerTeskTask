@@ -12,10 +12,10 @@ class TracksListPresenter: TracksListViewOutput {
     weak var view: TracksListViewInput?
    
     var goToTrackPlayerScreen: ((PlayerManager, Int) -> Void)?
-    
-    var goToItunesScreen: ((MPMediaPickerControllerDelegate) -> Void)?
-    var goToGalleryScreen: ((GalleryDelegate) -> Void)?
-    var goToFilesScreen: ((UIDocumentPickerDelegate) -> Void)?
+    var selectedRow = -1
+    var goToItunesScreen: ((MusicFilesHelper) -> Void)?
+    var goToGalleryScreen: ((GalleryHelper) -> Void)?
+    var goToFilesScreen: ((FilesAppHelper) -> Void)?
     var itunesHelper = MusicFilesHelper()
     var appFilesHelper = FilesAppHelper()
     var galleryHelper = GalleryHelper()
@@ -29,7 +29,18 @@ class TracksListPresenter: TracksListViewOutput {
     }
     
     func viewDidLoadDone() {
-        self.view?.setupNavBar()
+        self.view?.setupNavigationBar()
+    }
+    
+    func viewWillAppearDone() {
+        guard self.playerManager.isPlaying() else {
+            return
+        }
+        self.selectedRow = self.playerManager.trackCurrentIndex
+        if (0 ..< self.playerManager.getTracksCount()).contains(selectedRow) {
+            self.view?.selectCellWithIndexPath(IndexPath(item: self.playerManager.trackCurrentIndex,
+                                                         section: 0))
+        }
     }
     
     func viewDidAppearDone() {
@@ -45,6 +56,7 @@ class TracksListPresenter: TracksListViewOutput {
     }
     
     func rowDidSelected(atIndexPath indexPath: IndexPath) {
+        self.selectedRow = indexPath.item
         self.goToTrackPlayerScreen?(self.playerManager, indexPath.item)
     }
     

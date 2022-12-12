@@ -6,28 +6,41 @@
 //
 
 import AVFoundation
+import UIKit
 
 protocol PlayerManagerProtocol {
     func getTrack(withIndex index: Int) -> TrackModel?
     func getTracksCount() -> Int
     func getCurrentTrack() -> TrackModel?
-    func getCurrentState() -> PlayerManagerState
     func playClicked()
-    func pauseClicked()
-    func stopClicked()
     func rewind(withPercentageClicked percentage: Float)
     func nextTrackClicked()
     func previousTrackClicked()
-    func getNormalizedCurrentTime() -> Float
     func addPeriodicObserver(forInterval interval: CMTime,
                              queue: DispatchQueue,
-                             observer: @escaping ((CMTime) -> ()))
+                             observer: @escaping ((CMTime) -> Void))
+    func removePeriodicTimeObserver()
     func getCurrentTime() -> CMTime
     func getDuration() -> CMTime
     func changeVolume(_ volume: Float)
     func getCurrentTrackIndex() -> Int
-    
-    func replaceTrack(withTrackWithIndex trackIndex: Int)
+    func replaceTrack(withTrackWithIndex trackIndex: Int,
+                      andCompletion completion: (() -> Void)?)
+    func getButtonImage() -> UIImage?
+    func time(byPercentage percentage: Float) -> Float
+    func setDelegate(_ delegate: PlayerManagerDelegate)
+    func setCurrentTrackIndex(_ index: Int)
+}
+
+extension PlayerManagerProtocol {
+    func replaceTrack(withCompletion completion: (() -> Void)?) {
+        self.replaceTrack(withTrackWithIndex: self.getCurrentTrackIndex(),
+                          andCompletion: completion)
+    }
+}
+
+protocol PlayerManagerDelegate: AnyObject {
+    func updateTrackAppearance()
 }
 
 enum PlayerManagerState {
@@ -36,24 +49,17 @@ enum PlayerManagerState {
 
 class PlayerManager: PlayerManagerProtocol {
     
+    private weak var delegate: PlayerManagerDelegate?
     private var currentState: PlayerStateProtocol
     var trackCurrentIndex = -1
+    private var periodicTimeObserver: Any?
     
     init() {
         self.currentState = StopState.shared
     }
     
-    func getCurrentState() -> PlayerManagerState {
-        switch self.currentState {
-        case is PlayState:
-            return .play
-        case is PauseState:
-            return .pause
-        case is StopState:
-            return .stop
-        default:
-            return .none
-        }
+    func setDelegate(_ delegate: PlayerManagerDelegate) {
+        self.delegate = delegate
     }
     
     func getCurrentTrack() -> TrackModel? {
@@ -63,27 +69,26 @@ class PlayerManager: PlayerManagerProtocol {
         return self.defaultTracks[self.trackCurrentIndex]
     }
     
+    func isPlaying() -> Bool {
+        return self.currentState is PlayState
+    }
+    
     func getCurrentTrackIndex() -> Int {
         return self.trackCurrentIndex
     }
     
     func getCurrentTime() -> CMTime {
-        return self.player.currentTime()
-    }
-    
-    func getNormalizedCurrentTime() -> Float {
-        let currentTimeSeconds = CMTimeGetSeconds(player.currentTime())
-        
-        let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
-        let percentage = currentTimeSeconds / durationSeconds
-        
-        return Float(percentage)
+        return self.player.currentItem?.currentTime() ?? .zero
     }
     
     func getDuration() -> CMTime {
         let duration = self.player.currentItem?.duration ??
-        CMTimeMake(value: 1, timescale: 1)
+        CMTimeMake(value: 1, timescale: 60000)
         return duration
+    }
+    
+    func getButtonImage() -> UIImage? {
+        self.currentState.managerButtonImage(self)
     }
     
     func getTracksCount() -> Int {
@@ -98,17 +103,13 @@ class PlayerManager: PlayerManagerProtocol {
         self.currentState.managerPlay(self)
     }
     
-    func pauseClicked() {
-        self.currentState.managerPause(self)
-    }
-    
-    func stopClicked() {
-        self.currentState.managerStop(self)
-    }
-    
     func rewind(withPercentageClicked percentage: Float) {
         self.currentState.manager(self,
                                   rewindTrackWithPercentage: percentage)
+    }
+    
+    func previousTrackClicked() {
+        self.currentState.managerPreviousTrackSelected(self)
     }
     
     func nextTrackClicked() {
@@ -117,17 +118,18 @@ class PlayerManager: PlayerManagerProtocol {
     
     func addPeriodicObserver(forInterval interval: CMTime,
                              queue: DispatchQueue,
-                             observer: @escaping ((CMTime) -> ())) {
-        let interval = CMTimeMake(value: 1, timescale: 2)
-        
-        self.player.addPeriodicTimeObserver(forInterval: interval,
+                             observer: @escaping ((CMTime) -> Void)) {
+        let interval = CMTimeMake(value: 1, timescale: 60000)
+        self.periodicTimeObserver = self.player.addPeriodicTimeObserver(forInterval: interval,
                                             queue: queue) { time in
             observer(time)
         }
     }
     
-    func previousTrackClicked() {
-        self.currentState.managerPreviousTrackSelected(self)
+    func removePeriodicTimeObserver() {
+        if let periodicTimeObserver = periodicTimeObserver {
+            self.player.removeTimeObserver(periodicTimeObserver)
+        }
     }
     
     let player: AVPlayer = {
@@ -158,20 +160,35 @@ extension PlayerManager: PlayerManagerContext {
     }
     
     func play(trackWithIndex trackIndex: Int) {
-        self.replaceTrack(withTrackWithIndex: trackIndex)
-        self.player.play()
+        self.replaceTrack(withTrackWithIndex: trackIndex) {
+            self.play()
+        }
     }
     
-    func replaceTrack(withTrackWithIndex trackIndex: Int) {
+    func setCurrentTrackIndex(_ index: Int) {
+        self.trackCurrentIndex = index
+    }
+    
+    func replaceTrack(withTrackWithIndex trackIndex: Int,
+                      andCompletion completion: (() -> Void)? = nil) {
         guard self.defaultTracks.indices.contains(trackIndex) else { return }
         let trackURl = self.defaultTracks[trackIndex].trackURL
         self.trackCurrentIndex = trackIndex
-        let playerItem = AVPlayerItem(url: trackURl)
-        self.player.replaceCurrentItem(with: playerItem)
+        let assetKeys = ["playable", "duration", "currentTime"]
+
+        let asset = AVAsset(url: trackURl)
+        asset.loadValuesAsynchronously(forKeys: assetKeys, completionHandler: {
+            let playerItem = AVPlayerItem(asset: asset, automaticallyLoadedAssetKeys: assetKeys)
+            
+            self.player.replaceCurrentItem(with: playerItem)
+            self.delegate?.updateTrackAppearance()
+            completion?()
+        })
     }
     
     func changeOnNextTrack() {
         self.trackCurrentIndex = (self.trackCurrentIndex + 1) % self.defaultTracks.count
+        self.replaceTrack(withTrackWithIndex: self.trackCurrentIndex)
     }
     
     func changeOnPreviousTrack() {
@@ -180,10 +197,11 @@ extension PlayerManager: PlayerManagerContext {
         } else {
             self.trackCurrentIndex = (self.trackCurrentIndex - 1) % self.defaultTracks.count
         }
+        self.replaceTrack(withTrackWithIndex: self.trackCurrentIndex)
     }
     
     func play() {
-        self.play(trackWithIndex: self.trackCurrentIndex)
+        self.player.play()
     }
     
     func pause() {
@@ -197,12 +215,18 @@ extension PlayerManager: PlayerManagerContext {
     }
     
     func rewindTrack(with percentage: Float) {
+        let seekTime = CMTimeMakeWithSeconds(
+            Float64(self.time(byPercentage: percentage)),
+                                             preferredTimescale: 60000)
+        self.player.seek(to: seekTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+    }
+    
+    func time(byPercentage percentage: Float) -> Float {
         guard let durationTime = player.currentItem?.duration else {
-            return
+            return 0.0
         }
         let durationInSeconds = CMTimeGetSeconds(durationTime)
         let seekTimeInSeconds = Float64(percentage) * durationInSeconds
-        let seekTime = CMTimeMakeWithSeconds(seekTimeInSeconds, preferredTimescale: 1000)
-        player.seek(to: seekTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+        return Float(seekTimeInSeconds)
     }
 }

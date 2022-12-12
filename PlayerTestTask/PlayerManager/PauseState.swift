@@ -6,24 +6,16 @@
 //
 
 import Foundation
+import UIKit
 
 class PauseState: PlayerStateProtocol {
     
     static let shared = PauseState()
     private init() {}
     
-    
     func managerPlay(_ manager: PlayerManagerContext) {
         manager.setState(PlayState.shared)
         manager.play()
-    }
-    
-    func managerStop(_ manager: PlayerManagerContext) {
-        manager.setState(StopState.shared)
-        manager.stop()
-    }
-    
-    func managerPause(_ manager: PlayerManagerContext) {
     }
     
     func manager(_ manager: PlayerManagerContext,
@@ -47,5 +39,9 @@ class PauseState: PlayerStateProtocol {
     func manager(_ manager: PlayerManagerContext,
                  rewindTrackWithPercentage percentage: Float) {
         manager.rewindTrack(with: percentage)
+    }
+    
+    func managerButtonImage(_ manager: PlayerManagerContext) -> UIImage? {
+        UIImage(named: "playBtn")
     }
 }

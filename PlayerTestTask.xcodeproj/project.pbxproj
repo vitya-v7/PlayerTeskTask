@@ -12,11 +12,14 @@
 		AD6DAB002934E19D0085AB8F /* PlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAAFF2934E19D0085AB8F /* PlayerManager.swift */; };
 		AD6DAB022934E3B80085AB8F /* TrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB012934E3B80085AB8F /* TrackModel.swift */; };
 		AD6DAB042934E68A0085AB8F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB032934E68A0085AB8F /* DataManager.swift */; };
-		AD6DAB072934F5C60085AB8F /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB062934F5C60085AB8F /* ViewController+Extensions.swift */; };
 		AD6DAB092934F5E80085AB8F /* CMTime+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB082934F5E80085AB8F /* CMTime+Extensions.swift */; };
 		AD6DAB0B2934F5FC0085AB8F /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */; };
 		AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */; };
 		AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */; };
+		AD71EB53294302E800B04069 /* PlayerSlider.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD71EB51294302E800B04069 /* PlayerSlider.xib */; };
+		AD71EB54294302E800B04069 /* PlayerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD71EB52294302E800B04069 /* PlayerSlider.swift */; };
+		AD71EB56294303A200B04069 /* ViewWithXib.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD71EB55294303A200B04069 /* ViewWithXib.swift */; };
+		AD71EB5929432A8A00B04069 /* CustomSliderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD71EB5829432A8A00B04069 /* CustomSliderControl.swift */; };
 		AD810F9729391045007EFE66 /* PlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD810F9629391045007EFE66 /* PlayerState.swift */; };
 		AD84DC2D293FD65300759F05 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC2C293FD65300759F05 /* AlertHelper.swift */; };
 		AD84DC2F293FD65800759F05 /* ExportSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD84DC2E293FD65800759F05 /* ExportSessionHelper.swift */; };
@@ -68,11 +71,14 @@
 		AD6DAAFF2934E19D0085AB8F /* PlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerManager.swift; sourceTree = "<group>"; };
 		AD6DAB012934E3B80085AB8F /* TrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackModel.swift; sourceTree = "<group>"; };
 		AD6DAB032934E68A0085AB8F /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		AD6DAB062934F5C60085AB8F /* ViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extensions.swift"; sourceTree = "<group>"; };
 		AD6DAB082934F5E80085AB8F /* CMTime+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CMTime+Extensions.swift"; sourceTree = "<group>"; };
 		AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		AD6DAB0C29352FD00085AB8F /* ModulesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesCoordinator.swift; sourceTree = "<group>"; };
 		AD6DAB0F293548B90085AB8F /* TrackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
+		AD71EB51294302E800B04069 /* PlayerSlider.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerSlider.xib; sourceTree = "<group>"; };
+		AD71EB52294302E800B04069 /* PlayerSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerSlider.swift; sourceTree = "<group>"; };
+		AD71EB55294303A200B04069 /* ViewWithXib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewWithXib.swift; sourceTree = "<group>"; };
+		AD71EB5829432A8A00B04069 /* CustomSliderControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSliderControl.swift; sourceTree = "<group>"; };
 		AD810F9629391045007EFE66 /* PlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerState.swift; sourceTree = "<group>"; };
 		AD84DC2C293FD65300759F05 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		AD84DC2E293FD65800759F05 /* ExportSessionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSessionHelper.swift; sourceTree = "<group>"; };
@@ -143,7 +149,6 @@
 		AD6DAB052934F5B40085AB8F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				AD6DAB062934F5C60085AB8F /* ViewController+Extensions.swift */,
 				AD6DAB082934F5E80085AB8F /* CMTime+Extensions.swift */,
 				AD6DAB0A2934F5FB0085AB8F /* Double+Extensions.swift */,
 				AD84DC39293FD7B700759F05 /* FileManager+Extensions.swift */,
@@ -160,7 +165,26 @@
 			path = TrackTableViewCell;
 			sourceTree = "<group>";
 		};
-		AD84DC38293FD67100759F05 /* Hepers */ = {
+		AD71EB4C2942F80E00B04069 /* PlayerCustomSlider */ = {
+			isa = PBXGroup;
+			children = (
+				AD71EB5729432A7000B04069 /* CustomSliderControl */,
+				AD71EB55294303A200B04069 /* ViewWithXib.swift */,
+				AD71EB52294302E800B04069 /* PlayerSlider.swift */,
+				AD71EB51294302E800B04069 /* PlayerSlider.xib */,
+			);
+			path = PlayerCustomSlider;
+			sourceTree = "<group>";
+		};
+		AD71EB5729432A7000B04069 /* CustomSliderControl */ = {
+			isa = PBXGroup;
+			children = (
+				AD71EB5829432A8A00B04069 /* CustomSliderControl.swift */,
+			);
+			path = CustomSliderControl;
+			sourceTree = "<group>";
+		};
+		AD84DC38293FD67100759F05 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				AD84DC2C293FD65300759F05 /* AlertHelper.swift */,
@@ -170,7 +194,7 @@
 				AD84DC34293FD65E00759F05 /* MusicFilesHelper.swift */,
 				AD84DC36293FD66000759F05 /* RootPickerHelper.swift */,
 			);
-			path = Hepers;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		AD8E6BD92938913200AB3514 /* PlayerManager */ = {
@@ -188,6 +212,7 @@
 		AD8E7977293720520090B424 /* TrackDetailModule */ = {
 			isa = PBXGroup;
 			children = (
+				AD71EB4C2942F80E00B04069 /* PlayerCustomSlider */,
 				AD8E79782937206B0090B424 /* TrackPlayerViewController.swift */,
 				AD8E797A293720740090B424 /* TrackPlayerPresenter.swift */,
 			);
@@ -219,7 +244,7 @@
 		AD8E7D43292FCD4900B03BEF /* PlayerTestTask */ = {
 			isa = PBXGroup;
 			children = (
-				AD84DC38293FD67100759F05 /* Hepers */,
+				AD84DC38293FD67100759F05 /* Helpers */,
 				AD8E6BD92938913200AB3514 /* PlayerManager */,
 				AD8E7977293720520090B424 /* TrackDetailModule */,
 				ADCAD4E82931F12B00830AF3 /* TracksListModule */,
@@ -384,6 +409,7 @@
 				AD8E7D4E292FCD4B00B03BEF /* Assets.xcassets in Resources */,
 				AD6DA8E9293E2A80007653B9 /* Mp3 tracks in Resources */,
 				AD8E7D4C292FCD4900B03BEF /* Main.storyboard in Resources */,
+				AD71EB53294302E800B04069 /* PlayerSlider.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +480,7 @@
 				AD84DC33293FD65C00759F05 /* GalleryHelper.swift in Sources */,
 				AD84DC31293FD65B00759F05 /* FilesAppHelper.swift in Sources */,
 				AD84DC3A293FD7B700759F05 /* FileManager+Extensions.swift in Sources */,
+				AD71EB54294302E800B04069 /* PlayerSlider.swift in Sources */,
 				AD8E6BDB2938914D00AB3514 /* PlayState.swift in Sources */,
 				ADCAD4EC2931F3D400830AF3 /* TracksListPresenter.swift in Sources */,
 				AD8E6BDF2938916600AB3514 /* StopState.swift in Sources */,
@@ -463,15 +490,16 @@
 				AD6DAB022934E3B80085AB8F /* TrackModel.swift in Sources */,
 				AD6DAB10293548B90085AB8F /* TrackTableViewCell.swift in Sources */,
 				AD84DC2D293FD65300759F05 /* AlertHelper.swift in Sources */,
+				AD71EB56294303A200B04069 /* ViewWithXib.swift in Sources */,
 				AD84DC37293FD66000759F05 /* RootPickerHelper.swift in Sources */,
 				AD810F9729391045007EFE66 /* PlayerState.swift in Sources */,
-				AD6DAB072934F5C60085AB8F /* ViewController+Extensions.swift in Sources */,
 				AD6DAB002934E19D0085AB8F /* PlayerManager.swift in Sources */,
 				AD8E797B293720740090B424 /* TrackPlayerPresenter.swift in Sources */,
 				AD8E7D49292FCD4900B03BEF /* ViewController.swift in Sources */,
 				AD6DAB0D29352FD00085AB8F /* ModulesCoordinator.swift in Sources */,
 				AD8E7D45292FCD4900B03BEF /* AppDelegate.swift in Sources */,
 				AD6DAB092934F5E80085AB8F /* CMTime+Extensions.swift in Sources */,
+				AD71EB5929432A8A00B04069 /* CustomSliderControl.swift in Sources */,
 				AD84DC3C293FD83F00759F05 /* URL+Extensions.swift in Sources */,
 				AD8E7D47292FCD4900B03BEF /* SceneDelegate.swift in Sources */,
 				AD84DC35293FD65E00759F05 /* MusicFilesHelper.swift in Sources */,
@@ -659,9 +687,12 @@
 				DEVELOPMENT_TEAM = 69TGY6R53D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlayerTestTask/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Need permission for take audio from the Music application";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Need permission for take audio from the Gallery application";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.6;
@@ -673,7 +704,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.viktor-deryabin.PlayerTestTask";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -689,9 +720,12 @@
 				DEVELOPMENT_TEAM = 69TGY6R53D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlayerTestTask/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Need permission for take audio from the Music application";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Need permission for take audio from the Gallery application";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.6;
@@ -703,7 +737,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.viktor-deryabin.PlayerTestTask";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
