@@ -19,6 +19,7 @@ protocol TrackPlayerViewInput: UIViewController {
     func setupNavigationBar()
     func setTimeOnSlider(pastTime: Float,
                          remainTime: Float)
+    func setReplayCurrentButtonImage(_ image: UIImage)
 }
 
 protocol TrackPlayerViewOutput {
@@ -28,17 +29,19 @@ protocol TrackPlayerViewOutput {
     func tracksCount() -> Int
     func previousButtonTapped()
     func nextButtonTapped()
-    func playButtonTapped()
+    func playPauseButtonTapped()
     func sliderTimeBeganChange()
     func sliderTimeChanged(_ time: Float)
     func sliderTimeDragged(_ time: Float)
     func sliderVolumeChanged(_ time: Float)
     func maximumVolumeClicked()
     func muteVolumeClicked()
+    func replayButtonChangeState()
 }
 
 class TrackPlayerViewController: UIViewController,
                                  TrackPlayerViewInput {
+    
     var output: TrackPlayerViewOutput?
     static let storyboardIdentifier = "TrackPlayerControllerID"
     @IBOutlet weak private var volumeSlider: UISlider!
@@ -47,6 +50,7 @@ class TrackPlayerViewController: UIViewController,
     @IBOutlet weak private var playButton: UIButton!
     @IBOutlet weak private var albumImageView: UIImageView!
     @IBOutlet weak private var noteImage: UIImageView!
+    @IBOutlet weak private var replayCurrentTrackButton: UIButton!
     
     // MARK: - IBActions
     @IBAction func previousButtonTapped(_ sender: UIButton) {
@@ -54,7 +58,11 @@ class TrackPlayerViewController: UIViewController,
     }
     
     @IBAction func playButtonTapped(_ sender: UIButton) {
-        self.output?.playButtonTapped()
+        self.output?.playPauseButtonTapped()
+    }
+    
+    @IBAction func replayCurrentTrackPressed(_ sender: UIButton) {
+        self.output?.replayButtonChangeState()
     }
     
     func updatePlayButton(withImage image: UIImage) {
@@ -88,9 +96,7 @@ class TrackPlayerViewController: UIViewController,
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
-    // MARK: - Private Methods
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         self.timeSlider.delegate = self
@@ -119,11 +125,20 @@ class TrackPlayerViewController: UIViewController,
         }
     }
     
+    func setReplayCurrentButtonImage(_ image: UIImage) {
+        DispatchQueue.main.async {
+            self.replayCurrentTrackButton.setBackgroundImage(image,
+                                                             for: .normal)
+        }
+    }
+    
     func setupNavigationBar() {
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.backgroundColor = UIColor(named: "navBarColor")
-        self.navigationController?.navigationBar.standardAppearance = navBarAppearance
-        self.navigationItem.title = "Player"
+        DispatchQueue.main.async {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.backgroundColor = UIColor(named: "navBarColor")
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationItem.title = "Player"
+        }
     }
     
     func setMinTimeLabel(withValue pastValue: Float,

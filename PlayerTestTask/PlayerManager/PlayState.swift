@@ -14,8 +14,21 @@ class PlayState: PlayerStateProtocol {
     private init() {}
     
     func managerPlay(_ manager: PlayerManagerContext) {
+        manager.play()
+    }
+    
+    func managerPlayPause(_ manager: PlayerManagerContext) {
+        self.managerPause(manager)
+    }
+    
+    func managerPause(_ manager: PlayerManagerContext) {
         manager.setState(PauseState.shared)
         manager.pause()
+    }
+    
+    func managerStop(_ manager: PlayerManagerContext) {
+        manager.setState(StopState.shared)
+        manager.stop()
     }
     
     func manager(_ manager: PlayerManagerContext,

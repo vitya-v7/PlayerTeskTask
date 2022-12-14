@@ -44,10 +44,10 @@ class TrackPlayerPresenter: TrackPlayerViewOutput,
             object: nil
         )
         
+        self.playerManager.replayCurrentTrack = false
         self.view?.setupNavigationBar()
         self.observePlayerDurationTime()
         self.updateTrackAppearance()
-        
         self.playerManager.replaceTrack {
             self.playerManager.playClicked()
         }
@@ -98,6 +98,14 @@ class TrackPlayerPresenter: TrackPlayerViewOutput,
                                    remainTime: duration - currentTime)
     }
     
+    func replayButtonChangeState() {
+        self.playerManager.replayCurrentTrack = !self.playerManager.replayCurrentTrack
+        let imageName = self.playerManager.replayCurrentTrack == true ? "pauseBtn" : "playBtn"
+        if let image = UIImage(named: imageName) {
+            self.view?.setReplayCurrentButtonImage(image)
+        }
+    }
+    
     func tracksCount() -> Int {
         return self.playerManager.getTracksCount()
     }
@@ -116,8 +124,8 @@ class TrackPlayerPresenter: TrackPlayerViewOutput,
             withCurrentTime: CMTime(seconds: 0, preferredTimescale: 60000))
     }
     
-    func playButtonTapped() {
-        self.playerManager.playClicked()
+    func playPauseButtonTapped() {
+        self.playerManager.playPauseClicked()
         self.updatePlayButtonImage()
     }
     

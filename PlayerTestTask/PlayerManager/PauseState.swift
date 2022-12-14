@@ -18,6 +18,19 @@ class PauseState: PlayerStateProtocol {
         manager.play()
     }
     
+    func managerPlayPause(_ manager: PlayerManagerContext) {
+        self.managerPlay(manager)
+    }
+    
+    func managerPause(_ manager: PlayerManagerContext) {
+        manager.pause()
+    }
+    
+    func managerStop(_ manager: PlayerManagerContext) {
+        manager.setState(StopState.shared)
+        manager.stop()
+    }
+    
     func manager(_ manager: PlayerManagerContext,
                  playTrackWithIndex trackIndex: Int) {
         manager.setState(PlayState.shared)

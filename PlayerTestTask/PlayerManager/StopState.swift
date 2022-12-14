@@ -18,6 +18,19 @@ class StopState: PlayerStateProtocol {
         manager.play()
     }
     
+    func managerPause(_ manager: PlayerManagerContext) {
+        manager.setState(PauseState.shared)
+        manager.pause()
+    }
+    
+    func managerPlayPause(_ manager: PlayerManagerContext) {
+        self.managerPlay(manager)
+    }
+    
+    func managerStop(_ manager: PlayerManagerContext) {
+        manager.stop()
+    }
+    
     func manager(_ manager: PlayerManagerContext,
                  playTrackWithIndex trackIndex: Int) {
         manager.setState(PlayState.shared)
@@ -25,10 +38,12 @@ class StopState: PlayerStateProtocol {
     }
     
     func managerNextTrackSelected(_ manager: PlayerManagerContext) {
+        manager.stop()
         manager.changeOnNextTrack()
     }
     
     func managerPreviousTrackSelected(_ manager: PlayerManagerContext) {
+        manager.stop()
         manager.changeOnPreviousTrack()
     }
     

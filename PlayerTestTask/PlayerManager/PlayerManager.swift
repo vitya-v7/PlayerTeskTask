@@ -12,7 +12,9 @@ protocol PlayerManagerProtocol {
     func getTrack(withIndex index: Int) -> TrackModel?
     func getTracksCount() -> Int
     func getCurrentTrack() -> TrackModel?
+    func playPauseClicked()
     func playClicked()
+    func pauseClicked()
     func rewind(withPercentageClicked percentage: Float)
     func nextTrackClicked()
     func previousTrackClicked()
@@ -30,6 +32,7 @@ protocol PlayerManagerProtocol {
     func time(byPercentage percentage: Float) -> Float
     func setDelegate(_ delegate: PlayerManagerDelegate)
     func setCurrentTrackIndex(_ index: Int)
+    var replayCurrentTrack: Bool { get set }
 }
 
 extension PlayerManagerProtocol {
@@ -51,9 +54,19 @@ class PlayerManager: PlayerManagerProtocol {
     
     private weak var delegate: PlayerManagerDelegate?
     private var currentState: PlayerStateProtocol
-    var trackCurrentIndex = -1
+    var trackCurrentIndex = -1 {
+        didSet {
+            if self.replayCurrentTrack {
+                self.trackCurrentIndex = oldValue
+                self.trackPreviousIndex = -1
+            } else {
+                self.trackPreviousIndex = oldValue
+            }
+        }
+    }
+    var replayCurrentTrack = false
+    private var trackPreviousIndex = -1
     private var periodicTimeObserver: Any?
-    
     init() {
         self.currentState = StopState.shared
     }
@@ -99,8 +112,16 @@ class PlayerManager: PlayerManagerProtocol {
         self.defaultTracks.append(contentsOf: trackModels)
     }
     
+    func playPauseClicked() {
+        self.currentState.managerPlayPause(self)
+    }
+    
     func playClicked() {
         self.currentState.managerPlay(self)
+    }
+    
+    func pauseClicked() {
+        self.currentState.managerPause(self)
     }
     
     func rewind(withPercentageClicked percentage: Float) {
@@ -157,6 +178,7 @@ class PlayerManager: PlayerManagerProtocol {
 extension PlayerManager: PlayerManagerContext {
     func setState(_ playerState: PlayerStateProtocol) {
         self.currentState = playerState
+        self.delegate?.updateTrackAppearance()
     }
     
     func play(trackWithIndex trackIndex: Int) {
@@ -171,9 +193,10 @@ extension PlayerManager: PlayerManagerContext {
     
     func replaceTrack(withTrackWithIndex trackIndex: Int,
                       andCompletion completion: (() -> Void)? = nil) {
-        guard self.defaultTracks.indices.contains(trackIndex) else { return }
-        let trackURl = self.defaultTracks[trackIndex].trackURL
+        guard self.defaultTracks.indices.contains(trackIndex),
+              trackIndex != self.trackPreviousIndex else { return }
         self.trackCurrentIndex = trackIndex
+        let trackURl = self.defaultTracks[self.trackCurrentIndex].trackURL
         let assetKeys = ["playable", "duration", "currentTime"]
 
         let asset = AVAsset(url: trackURl)
