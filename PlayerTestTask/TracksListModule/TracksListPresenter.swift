@@ -12,7 +12,6 @@ class TracksListPresenter: TracksListViewOutput {
     weak var view: TracksListViewInput?
    
     var goToTrackPlayerScreen: ((PlayerManager, Int) -> Void)?
-    var selectedRow = -1
     var goToItunesScreen: ((MusicFilesHelper) -> Void)?
     var goToGalleryScreen: ((GalleryHelper) -> Void)?
     var goToFilesScreen: ((FilesAppHelper) -> Void)?
@@ -36,8 +35,7 @@ class TracksListPresenter: TracksListViewOutput {
         guard self.playerManager.isPlaying() else {
             return
         }
-        self.selectedRow = self.playerManager.trackCurrentIndex
-        if (0 ..< self.playerManager.getTracksCount()).contains(selectedRow) {
+        if (0 ..< self.playerManager.getTracksCount()).contains(self.playerManager.trackCurrentIndex) {
             self.view?.selectCellWithIndexPath(IndexPath(item: self.playerManager.trackCurrentIndex,
                                                          section: 0))
         }
@@ -56,8 +54,11 @@ class TracksListPresenter: TracksListViewOutput {
     }
     
     func rowDidSelected(atIndexPath indexPath: IndexPath) {
-        self.selectedRow = indexPath.item
         self.goToTrackPlayerScreen?(self.playerManager, indexPath.item)
+    }
+    
+    func getCurrentTrackIndex() -> Int {
+        return self.playerManager.trackCurrentIndex
     }
     
     func openItunesClicked() {

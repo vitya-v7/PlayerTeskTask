@@ -18,6 +18,7 @@ class TrackPlayerPresenter: TrackPlayerViewOutput,
     init(withPlayerManager playerManager: PlayerManager,
          andIndex index: Int) {
         self.playerManager = playerManager
+        self.playerManager.replayCurrentTrack = false
         self.playerManager.setCurrentTrackIndex(index)
         self.playerManager.setDelegate(self)
     }
@@ -96,6 +97,14 @@ class TrackPlayerPresenter: TrackPlayerViewOutput,
         let currentTime = self.playerManager.time(byPercentage: time)
         self.view?.setTimeOnSlider(pastTime: currentTime,
                                    remainTime: duration - currentTime)
+    }
+    
+    func disableButtonState(_ disable: Bool) {
+        self.playerManager.replayCurrentTrack = disable
+        let imageName = self.playerManager.replayCurrentTrack == true ? "pauseBtn" : "playBtn"
+        if let image = UIImage(named: imageName) {
+            self.view?.setReplayCurrentButtonImage(image)
+        }
     }
     
     func replayButtonChangeState() {

@@ -27,7 +27,9 @@ class CustomSliderControl: UIControl {
         } didSet {
             progress = progress > sliderMaximumValue ? sliderMaximumValue : progress
             progress = progress < sliderMinimumValue ? sliderMinimumValue : progress
-            self.setNeedsDisplay()
+            DispatchQueue.main.async {
+                self.setNeedsDisplay()
+            }
         }
     }
         

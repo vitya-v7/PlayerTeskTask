@@ -25,7 +25,7 @@ protocol TracksListViewOutput {
     func openItunesClicked()
     func openGalleryClicked()
     func openFilesClicked()
-    var selectedRow: Int { get }
+    func getCurrentTrackIndex() -> Int
 }
 
 class TracksListViewController: UIViewController, TracksListViewInput {
@@ -148,9 +148,13 @@ extension TracksListViewController: UITableViewDataSource {
         let view = UIView()
         view.backgroundColor = UIColor(named: "appGreenColor")
         cell.selectedBackgroundView = view
-        cell.setHighlighted(output.selectedRow == indexPath.item,
-                            animated: true)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let output = self.output else { return }
+        cell.setSelected(output.getCurrentTrackIndex() == indexPath.item,
+                         animated: false)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
