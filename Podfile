@@ -6,5 +6,4 @@ target 'PlayerTestTask' do
   # use_frameworks!
   pod 'SwiftLint'
   # Pods for PlayerTestTask
-
 end
