@@ -197,8 +197,8 @@ extension PlayerManager: PlayerManagerContext {
               trackIndex != self.trackPreviousIndex else { return }
         self.trackCurrentIndex = trackIndex
         let trackURl = self.defaultTracks[self.trackCurrentIndex].trackURL
-        let assetKeys = ["playable", "duration", "currentTime"]
-
+        let assetKeys = ["playable", "duration"]
+        trackURl.startAccessingSecurityScopedResource()
         let asset = AVAsset(url: trackURl)
         asset.loadValuesAsynchronously(forKeys: assetKeys, completionHandler: {
             let playerItem = AVPlayerItem(asset: asset, automaticallyLoadedAssetKeys: assetKeys)
@@ -206,6 +206,7 @@ extension PlayerManager: PlayerManagerContext {
             self.player.replaceCurrentItem(with: playerItem)
             self.delegate?.updateTrackAppearance()
             completion?()
+            trackURl.stopAccessingSecurityScopedResource()
         })
     }
     

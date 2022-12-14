@@ -28,6 +28,7 @@ class ExportSessionHelper {
             return
         }
         
+        item.trackURL.startAccessingSecurityScopedResource()
         exportSession.outputURL = tempFileUrl
         exportSession.outputFileType = .m4a
         var mutableItem = item
@@ -44,14 +45,17 @@ class ExportSessionHelper {
                 completion(mutableItem)
             default: break
             }
+            item.trackURL.stopAccessingSecurityScopedResource()
         })
     }
     
     func exportAudioItem(_ item: TrackModel,
                          andCompletion completion: @escaping ((TrackModel) -> Void),
                          errorCompletion: @escaping ((String?) -> Void)) {
+        item.trackURL.startAccessingSecurityScopedResource()
         let assetItem = AVAsset(url: item.trackURL)
         guard let exportSession = AVAssetExportSession(asset: assetItem, presetName: AVAssetExportPresetAppleM4A) else {
+            item.trackURL.stopAccessingSecurityScopedResource()
             return
         }
         self.exportAudioItem(item,
@@ -101,6 +105,7 @@ class ExportSessionHelper {
         self.exportAudioItem(item,
                              withExportSession: exportSession, andCompletion: { item in
             completion(item)
+            item.trackURL.stopAccessingSecurityScopedResource()
         }, errorCompletion: errorCompletion)
                 
     }
